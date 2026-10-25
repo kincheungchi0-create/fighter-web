@@ -1,0 +1,98 @@
+{
+  "sparkfox": {
+    "name": "Spark Fox",
+    "displayname": "Spark Fox",
+    "author": "fighter-web OC",
+    "kit": "Rushdown / speed. Jab flurry, dash punch, Lightning Kick (DF+K), Volt Burst (QCF+P), Fox Flip anti-air (DP+K).",
+    "style": "small athletic orange fox fighter in blue sleeveless tech jacket, white shorts, neon sneakers, electric blue accents",
+    "voice_id": "5fa1fc8fd9bd4f8e8e4b0422a1a02637",
+    "voice_note": "海綿粵語 energetic young male",
+    "lines": {
+      "name": "[excited, proud] 閃狐！",
+      "attack": "[aggressive shout] 電閃！",
+      "hurt": "[pained] 呃！",
+      "ko": "[defeated groan] 唔得……",
+      "victory": "[cheerful victory] 閃電勝出！"
+    }
+  },
+  "ironvow": {
+    "name": "Iron Vow",
+    "displayname": "Iron Vow",
+    "author": "fighter-web OC",
+    "kit": "Heavy / armor. Shield Bash, Guard Crush (hold F+P), Greatslash (QCF+H), Oathquake (QCB+H), Armor Charge.",
+    "style": "tall armored knight with silver plate, navy cape, glowing orange crest, heavy claymore, heroic anime painted style",
+    "voice_id": "98cb39ac0b5a4c29af14004c4c50e7c0",
+    "voice_note": "热血战士 powerful dramatic male",
+    "lines": {
+      "name": "[solemn, powerful] 鐵誓！",
+      "attack": "[deep battle cry] 破甲！",
+      "hurt": "[heavy grunt] 哼！",
+      "ko": "[falling] 誓言未完……",
+      "victory": "[noble] 榮譽歸於勝者！"
+    }
+  },
+  "neonpulse": {
+    "name": "Neon Pulse",
+    "displayname": "Neon Pulse",
+    "author": "fighter-web OC",
+    "kit": "Zoner / teleport. Pulse Beam (QCF+P), Drone Mine (QCB+P), Phase Step teleport (QCF+K), Overclock ultra.",
+    "style": "slim cyber mage with magenta hair, holographic coat, glowing circuit tattoos, floating neon orbs, futuristic anime",
+    "voice_id": "2212f2bd64a24b2c9889cf97e758d290",
+    "voice_note": "年輕女粵語 energetic female Cantonese",
+    "lines": {
+      "name": "[cool confident] 霓脈！",
+      "attack": "[sharp] 脈衝！",
+      "hurt": "[hurt] 啊！",
+      "ko": "[glitching] 訊號……斷……",
+      "victory": "[smug] 頻率鎖定。"
+    }
+  },
+  "jadeember": {
+    "name": "Jade Ember",
+    "displayname": "Jade Ember",
+    "author": "fighter-web OC",
+    "kit": "Balanced fire martial. Ember Palm, Fireball (QCF+P), Rising Phoenix (DP+P), Ash Sweep low, Inferno Rush.",
+    "style": "athletic martial artist with jade-green wrap top, black pants, ember-orange hair tips, fire aura accents, hand-painted anime",
+    "voice_id": "561f00551f904161aa70e0bb8aebf11e",
+    "voice_note": "元气香港女声 energetic Cantonese female",
+    "lines": {
+      "name": "[bright] 玉焰！",
+      "attack": "[fiery] 燃！",
+      "hurt": "[ouch] 呀！",
+      "ko": "[fading] 火……熄……",
+      "victory": "[cheerful] 火焰不滅！"
+    }
+  },
+  "galequill": {
+    "name": "Gale Quill",
+    "displayname": "Gale Quill",
+    "author": "fighter-web OC",
+    "kit": "Midrange staff / wind. Quill Poke, Cyclone Spin (QCF+K), Sky Dive (air QCB+K), Feather Barrage, Tempest Wall.",
+    "style": "lean wind monk with white-teal robes, long staff tipped with quill blade, flowing scarf, calm determined eyes",
+    "voice_id": "8e5e2efe5c9a4f55bd3b1427ece07e0f",
+    "voice_note": "香港男子 confident energetic male",
+    "lines": {
+      "name": "[calm firm] 風僧！",
+      "attack": "[focused] 疾風！",
+      "hurt": "[grunt] 唔！",
+      "ko": "[soft] 風……停……",
+      "victory": "[serene] 隨風而勝。"
+    }
+  },
+  "duskshade": {
+    "name": "Dusk Shade",
+    "displayname": "Dusk Shade",
+    "author": "fighter-web OC",
+    "kit": "Mixup / trickster. Low shade kick, Fade Step (QCB+K), Twin Shadow (QCF+P), Haunt Grab, Midnight Veil.",
+    "style": "mysterious trickster with violet hooded cloak, dual daggers, pale mask half-hidden, purple mist, sly grin anime painted",
+    "voice_id": "cc488ba472814119b56e70b0df2d3667",
+    "voice_note": "Fizzarolli Cantonese expressive male",
+    "lines": {
+      "name": "[playful dark] 影魅！",
+      "attack": "[sneaky shout] 暗襲！",
+      "hurt": "[hiss] 嘶！",
+      "ko": "[whisper fade] 影……散……",
+      "victory": "[chuckle] 夜未完。"
+    }
+  }
+}

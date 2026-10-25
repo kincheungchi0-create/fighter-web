@@ -1313,11 +1313,11 @@ fadein.time = 50          ;Duration of the fade-in effect
 fadein.col = 0, 0, 0      ;Color of the fade-in
 fadeout.time = 50         ;Duration of the fade-out effect
 fadeout.col = 0, 0, 0     ;Color of the fade-out
-title.waittime = 600      ;Time to wait at title before starting demo mode
-fight.endtime = 1500      ;Time to display the fight before returning to title
+title.waittime = 180      ;Time to wait at title before starting demo mode
+fight.endtime = 3600      ;Time to display the fight before returning to title
 fight.playbgm = 0         ;Set to 1 to enable in-fight BGM, 0 to disable
 fight.stopbgm = 1         ;Set to 1 to stop title BGM (only if playbgm = 0)
-fight.bars.display = 0    ;Set to 1 to display lifebar, 0 to disable
+fight.bars.display = 1    ;Set to 1 to display lifebar, 0 to disable
 intro.waitcycles = 1      ;Cycles to wait before intro cutscene is played again
 debuginfo = 0             ;Set to 0 to hide debugging info (debug mode only)
 

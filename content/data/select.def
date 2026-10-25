@@ -205,12 +205,12 @@
  ;
  ;Insert your characters below.
 
-kfm720, stages/stage0-720.def
-kfm, stages/stage0-720.def
-kfm_zss, stages/stage0-720.def
-suavedude, stages/stage0-720.def
-takezo, stages/takezo.def
-genpaku, stages/stage0-720.def
+sparkfox, stages/stage0-720.def
+ironvow, stages/stage0-720.def
+neonpulse, stages/stage0-720.def
+jadeember, stages/stage0-720.def
+galequill, stages/stage0-720.def
+duskshade, stages/stage0-720.def
 Training, stages/stage0-720.def, exclude=1
 randomselect
 

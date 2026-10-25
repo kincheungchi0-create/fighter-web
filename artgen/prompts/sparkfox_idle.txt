@@ -1,0 +1,15 @@
+Use your built-in image_gen tool (NOT any CLI/API fallback script). One image_gen call only.
+
+Generate ONE original fighting-game character idle pose for an ORIGINAL IP (not any existing franchise):
+- Name vibe: Spark Fox
+- Design: small athletic orange fox fighter in blue sleeveless tech jacket, white shorts, neon sneakers, electric blue accents
+- Style: premium hand-painted 2D anime fighting-game illustration, clean bold line art, cel shading, saturated colors, polished spirit of classic arcade fighters but fully original.
+- Framing: single character, full body head-to-toe, faces RIGHT, generous transparent padding.
+- Background: fully transparent real alpha. No floor, shadow, scenery, text, watermark, logo.
+
+After generating, save/copy the PNG to exactly:
+/workspace/fiiight/artgen/out/sparkfox_idle.png
+Also copy the same file to:
+/workspace/fiiight/content/chars/sparkfox/art/idle.png
+
+Do not write other code. At the end print both destination paths and whether each file exists.

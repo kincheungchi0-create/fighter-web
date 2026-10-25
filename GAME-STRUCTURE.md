@@ -1,45 +1,51 @@
-# Your game structure (based on fiiight)
+# Fighter Web — game structure
 
-Treat this repo as your game. Touch these layers only:
+Browser 1v1 fighter based on [fiiight](https://github.com/mathmati/fiiight) (Ikemen GO WASM).
 
 ```
-fiiight/
-├── content/          ← YOUR GAME (chars, stages, roster, UI motif)
-│   ├── chars/        ← one folder per character (<name>/<name>.def + assets)
-│   ├── stages/       ← .def + .sff (+ optional music)
-│   ├── data/
-│   │   ├── select.def    ← roster (edit this to add/remove chars)
-│   │   ├── fight.def     ← lifebar / fight HUD
-│   │   └── ikemen1/      ← title / select screen motif (swap when you brand)
-│   ├── font/ sound/ video/
-│   └── MANIFEST.md   ← keep licenses for anything you ship
-├── web/              ← browser shell (title, icons, touch, loader)
-│   ├── index.html    ← page title / PWA name
-│   ├── manifest.json
-│   └── icons/
-├── build/wasm.sh     ← packs content/ → web/content.zip + builds WASM
-├── engine/           ← vendored Ikemen GO (leave alone unless porting engine)
-└── port/             ← WASM port notes (upstreaming)
+fighter-web/
+├── content/                 ← YOUR GAME
+│   ├── chars/<name>/        ← 6 OCs + Training
+│   │   ├── <name>.def/.sff/.air/.cns/.cmd
+│   │   ├── art/idle.png     ← Codex $imagegen master idle (transparent PNG)
+│   │   ├── voice/*.mp3      ← Fish Audio Drama 3 lines
+│   │   └── KIT.md           ← archetype + skill list
+│   ├── data/select.def      ← roster
+│   ├── data/ikemen1/        ← motif (Demo Mode enabled for auto CPU)
+│   ├── sound/announcer/     ← VS / Ready / Go / KO
+│   └── sound/VOICES.md
+├── docs/CPU-VS-CPU.md       ← how to watch AI vs AI
+├── web/                     ← static shell + ikemen.wasm + content.zip
+├── build/wasm.sh
+└── engine/                  ← vendored Ikemen GO (do not edit casually)
 ```
 
-## Day-to-day workflow
+## Original roster (6 OCs)
 
-1. Drop chars into `content/chars/<name>/`
-2. List them in `content/data/select.def` under `[Characters]`
-3. Add stages under `content/stages/` and `[ExtraStages]`
-4. Rebuild: `bash build/wasm.sh` then `node web/dev-server.mjs 8080`
-5. Open http://localhost:8080
+| Folder | Display | Archetype | Distinct skills (documented) |
+|--------|---------|-----------|------------------------------|
+| sparkfox | Spark Fox | Rushdown / speed | Jab Flurry, Dash Punch, Lightning Kick, Volt Burst, Fox Flip |
+| ironvow | Iron Vow | Heavy / armor | Shield Bash, Guard Crush, Greatslash, Oathquake, Armor Charge |
+| neonpulse | Neon Pulse | Zoner / teleport | Pulse Beam, Drone Mine, Phase Step, Overclock, Circuit Jab |
+| jadeember | Jade Ember | Fire martial | Ember Palm, Fireball, Rising Phoenix, Ash Sweep, Inferno Rush |
+| galequill | Gale Quill | Midrange / wind | Quill Poke, Cyclone Spin, Sky Dive, Feather Barrage, Tempest Wall |
+| duskshade | Dusk Shade | Mixup / trickster | Shade Kick, Fade Step, Twin Shadow, Haunt Grab, Midnight Veil |
 
-Shell-only (content change, wasm already built): `bash build/wasm.sh --shell-only`
+**Mechanical gap:** Each OC is playable via an adapted Kung Fu Man 720 base (states/AI/SFF). Custom idle art + voices ship in `art/` and `voice/`; packing custom frames into `.sff` / wiring MP3 into `.snd` is the next art-pipeline step (needs Fighter Factory or equivalent). Walk/run speeds are already differentiated per kit.
 
-## Do not edit (unless you know why)
+## CPU vs CPU auto
 
-- `engine/src/` — fighting engine; update from upstream Ikemen GO / fiiight port
-- Bundled KFM / Takezo / etc. — replace with your own IP when ready; keep licenses in MANIFEST.md
+See `docs/CPU-VS-CPU.md`. Short version: Title → **Watch Mode → CPU Match**, or wait ~3s on title for Demo Mode.
 
-## Branding checklist
+## Build / run
 
-- [ ] `web/index.html` title + apple-mobile-web-app-title
-- [ ] `web/manifest.json` name / short_name
-- [ ] `web/icons/`
-- [ ] Motif under `content/data/ikemen1/` (or new motif folder + point config at it)
+```bash
+bash build/wasm.sh          # full engine + content.zip
+bash build/wasm.sh --shell-only   # content only
+node web/dev-server.mjs 8080
+```
+
+## Art / voice tools used
+
+- Codex CLI `$imagegen` → `artgen/out/*_idle.png`
+- Fish Audio `model: drama-3` → `content/chars/*/voice/` + `content/sound/announcer/`

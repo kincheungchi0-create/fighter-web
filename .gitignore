@@ -1,6 +1,4 @@
-web/ikemen.wasm
-web/content.zip
-web/version.txt
+# Keep web/ikemen.wasm, web/content.zip, web/version.txt tracked for Vercel static deploy
 web/test/fstest.wasm
 web/test/content.zip
 web/test/boot/shots/
@@ -8,3 +6,10 @@ web/test/boot/lastlog.txt
 web/test/loader/shots/
 web/test/loader/fixture/
 web/__pycache__/
+
+# secrets
+**/*api_key*
+.env
+.env.*
+
+artgen/logs/

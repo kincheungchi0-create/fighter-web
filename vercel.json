@@ -1,0 +1,19 @@
+{
+  "version": 2,
+  "name": "fighter-web",
+  "buildCommand": null,
+  "outputDirectory": "web",
+  "rewrites": [],
+  "headers": [
+    {
+      "source": "/ikemen.wasm",
+      "headers": [{ "key": "Content-Type", "value": "application/wasm" }]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=60" }
+      ]
+    }
+  ]
+}
