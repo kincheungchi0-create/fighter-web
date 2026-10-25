@@ -12,6 +12,17 @@
 ; main — CI rebuilds and redeploys. See README.md "Host your own game".
 ;===============================================================================
 ;-------------------------------------------------------------------------------
+[Characters] section, e.g.:
+;     <name>, stages/stage0-720.def
+; To add a stage: put its .def + .sff under content/stages/ and list the .def
+; in the howard, stages/stage0-720.def
+
+[ExtraStages] section further down, e.g.:
+;     stages/mystage.def
+; Then rebuild the bundle (bash build/wasm.sh --shell-only) or just push to
+; main — CI rebuilds and redeploys. See README.md "Host your own game".
+;===============================================================================
+;-------------------------------------------------------------------------------
 [Characters]
  ;How to add characters
  ;---------------------
@@ -205,13 +216,15 @@
  ;
  ;Insert your characters below.
 
-sparkfox, stages/stage0-720.def
-ironvow, stages/stage0-720.def
-neonpulse, stages/stage0-720.def
-jadeember, stages/stage0-720.def
-galequill, stages/stage0-720.def
-duskshade, stages/stage0-720.def
+; Insert your characters below. Howard-family OCs (from spirit-clash).
+howard, stages/stage0-720.def
+chiihoward, stages/stage0-720.def
+hornam, stages/stage0-720.def
+percy, stages/stage0-720.def
+tyrus, stages/stage0-720.def
+daddy, stages/stage0-720.def
 Training, stages/stage0-720.def, exclude=1
+
 randomselect
 
 ;-------------------------------------------------------------------------------

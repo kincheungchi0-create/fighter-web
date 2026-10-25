@@ -13,3 +13,5 @@ web/__pycache__/
 .env.*
 
 artgen/logs/
+.vercel
+artgen/out/*_ref.png

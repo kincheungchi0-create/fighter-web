@@ -1,0 +1,17 @@
+Use your built-in image_gen tool (NOT any CLI/API fallback script). One image_gen call only.
+
+Generate ONE original fighting-game character idle pose for an ORIGINAL kids IP (borrowed design from our spirit-clash OC — not any existing franchise trademark):
+- Name: ChiiHoward
+- Design: same boy face/hair as Howard but casual: white knit beanie with two round bear ears (pink inner), soft pink tee with tiny generic cute bear face print (NOT any trademarked character), light-blue shorts, white wristbands, pink-trimmed sneakers
+- Kit vibe (props optional in idle, hands mostly empty unless natural): Cute plush kit
+- IMPORTANT: Do NOT depict any trademarked Sanrio/Chiikawa character face or logo. Shirt print must be a generic simple cute round bear face doodle only.
+- Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions (~3 heads tall unless noted taller/rounder).
+- Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose, side / three-quarter view FACING RIGHT, feet planted, generous empty transparent padding. Portrait about 2:3.
+- Background: fully transparent real alpha. No floor, shadow, scenery, text, watermark, logo, extra characters.
+
+After generating, save/copy the PNG to exactly:
+/workspace/fiiight/artgen/out/chiihoward_idle.png
+Also copy the same file to:
+/workspace/fiiight/content/chars/chiihoward/art/idle.png
+
+Do not write other code. At the end print both destination paths and whether each file exists.

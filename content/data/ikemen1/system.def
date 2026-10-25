@@ -184,74 +184,64 @@ cursor.move.snd = 100,0
 cursor.done.snd = 100,1
 cancel.snd = 100,2
 
-; Flexible submenu grouping.
-;Full documentation of this feature is available on Ikemen GO features wiki
+; Minimal title menu for Fighter Web (Howard-family 1v1):
+;   CPU VS CPU (Watch) / VERSUS / EXIT
+; Empty itemname = hidden (Ikemen GO skips blank displaynames).
+; Full docs: Ikemen GO features wiki — Flexible submenu grouping.
 
-; Submenu: Arcade
-menu.itemname.menuarcade = ARCADE
-menu.itemname.menuarcade.arcade = SINGLE MODE
-menu.itemname.menuarcade.teamarcade = TEAM ARCADE
-menu.itemname.menuarcade.teamcoop = TEAM CO-OP
-menu.itemname.menuarcade.back = BACK
+; Hidden: Arcade / Story / Network / Practice / Mission / Options / team modes
+menu.itemname.menuarcade =
+menu.itemname.menuarcade.arcade =
+menu.itemname.menuarcade.teamarcade =
+menu.itemname.menuarcade.teamcoop =
+menu.itemname.menuarcade.back =
 
-; Submenu: Versus
-menu.itemname.menuversus = VS MODE
-menu.itemname.menuversus.versus = 1P VS 2P
-menu.itemname.menuversus.teamversus = TEAM VERSUS
-menu.itemname.menuversus.versuscoop = VERSUS CO-OP
-menu.itemname.menuversus.freebattle = QUICK MATCH
-menu.itemname.menuversus.back = BACK
+menu.itemname.storymode =
+menu.itemname.storymode.back =
 
-; Submenu: Story Mode
-menu.itemname.storymode = STORY MODE
-; story arcs menu items are automatically added before storymode.back
-menu.itemname.storymode.back = BACK
+menu.itemname.menunetwork =
+menu.itemname.menunetwork.serverhost =
+menu.itemname.menunetwork.serverjoin =
+menu.itemname.menunetwork.back =
+menu.itemname.menunetwork.serverjoin.joinadd =
+menu.itemname.menunetwork.serverjoin.back =
 
-; Submenu: Network
-menu.itemname.menunetwork = NETWORK
-menu.itemname.menunetwork.serverhost = HOST GAME
-menu.itemname.menunetwork.serverjoin = JOIN GAME
-menu.itemname.menunetwork.back = BACK
+; Keep server.* keys present for netplay sync codepaths, but blank labels
+menu.itemname.server.netplayversus =
+menu.itemname.server.netplayteamcoop =
+menu.itemname.server.netplaysurvivalcoop =
+menu.itemname.server.back =
 
-; known IP addresses show up before serverjoin.back item
-menu.itemname.menunetwork.serverjoin.joinadd = NEW ADDRESS
-menu.itemname.menunetwork.serverjoin.back = BACK
+menu.itemname.menupractice =
+menu.itemname.menupractice.training =
+menu.itemname.menupractice.back =
 
-; This group is hidden and should not be moved to other menus.
-; It's opened automatically, after synchronization with online player.
-menu.itemname.server.netplayversus = VERSUS 2P
-menu.itemname.server.netplayteamcoop = ARCADE CO-OP
-menu.itemname.server.netplaysurvivalcoop = SURVIVAL CO-OP
-menu.itemname.server.back = EXIT
+menu.itemname.menumission =
+menu.itemname.menumission.survival =
+menu.itemname.menumission.survivalcoop =
+menu.itemname.menumission.timeattack =
+menu.itemname.menumission.bonusgames =
+menu.itemname.menumission.back =
+menu.itemname.menumission.bonusgames.back =
 
-; Submenu: Practice
-menu.itemname.menupractice = PRACTICE
-menu.itemname.menupractice.training = TRAINING
-menu.itemname.menupractice.back = BACK
+menu.itemname.menuwatch =
+menu.itemname.menuwatch.watch =
+menu.itemname.menuwatch.randomtest =
+menu.itemname.menuwatch.replay =
+menu.itemname.menuwatch.back =
 
-; Submenu: Mission
-menu.itemname.menumission = MISSION
-menu.itemname.menumission.survival = SURVIVAL
-menu.itemname.menumission.survivalcoop = SURVIVAL CO-OP
-menu.itemname.menumission.timeattack = TIME ATTACK
-menu.itemname.menumission.bonusgames = BONUS GAMES
-menu.itemname.menumission.back = BACK
+menu.itemname.menuversus =
+menu.itemname.menuversus.versus =
+menu.itemname.menuversus.teamversus =
+menu.itemname.menuversus.versuscoop =
+menu.itemname.menuversus.freebattle =
+menu.itemname.menuversus.back =
 
-; Submenu: Mission => Bonus Games
-; bonus characters menu items are automatically added before bonusgames.back
-menu.itemname.menumission.bonusgames.back = BACK
+menu.itemname.options =
 
-; Submenu: Watch Mode
-menu.itemname.menuwatch = WATCH MODE
-menu.itemname.menuwatch.watch = CPU MATCH
-menu.itemname.menuwatch.randomtest = RANDOMTEST
-menu.itemname.menuwatch.replay = REPLAY
-menu.itemname.menuwatch.back = BACK
-
-; Options
-menu.itemname.options = OPTIONS
-
-; Exit Game
+; Visible top-level modes only
+menu.itemname.watch = CPU VS CPU
+menu.itemname.versus = VERSUS
 menu.itemname.exit = EXIT
 
 ;----------------------------
@@ -2251,7 +2241,7 @@ credits.scale = 1.0, 1.0
 ; Flexible submenu grouping.
 ;Full documentation of this feature is available on Ikemen GO features wiki
 
-menu.itemname.arcade = ARCADE
+menu.itemname.arcade =
 
 ;-------------------
 ;Attract mode screen background

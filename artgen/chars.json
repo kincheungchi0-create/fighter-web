@@ -1,98 +1,110 @@
 {
-  "sparkfox": {
-    "name": "Spark Fox",
-    "displayname": "Spark Fox",
-    "author": "fighter-web OC",
-    "kit": "Rushdown / speed. Jab flurry, dash punch, Lightning Kick (DF+K), Volt Burst (QCF+P), Fox Flip anti-air (DP+K).",
-    "style": "small athletic orange fox fighter in blue sleeveless tech jacket, white shorts, neon sneakers, electric blue accents",
+  "howard": {
+    "name": "Howard",
+    "displayname": "Howard",
+    "author": "spirit-clash OC",
+    "kit": "Stationery rush. Giant pencil poke, pen-sword slash, textbook shield (block/reflect vibe), ruler smash, homework alphabet storm ultimate.",
+    "style": "cheerful 7yo HK schoolboy, messy brown hair, white polo blue-yellow trim, navy shorts, blue-white sneakers, navy backpack",
+    "walk": 3.4,
+    "run": 7.0,
+    "voice_id": "e5a0f89f853841e386d22063f9c85d7f",
+    "voice_note": "粤语童声 cheerful schoolboy",
+    "lines": {
+      "name": "[excited, proud] 豪仔！",
+      "attack": "[excited] 嘿！",
+      "hurt": "[pained] 哎呀！",
+      "ko": "[defeated] 哇呀——我未做完功課㗎！",
+      "victory": "[cheerful victory] 功課全對！"
+    }
+  },
+  "chiihoward": {
+    "name": "ChiiHoward",
+    "displayname": "ChiiHoward",
+    "author": "spirit-clash OC",
+    "kit": "Cute plush kit. Soft plush swipes, rolling plush rush, flying-plush lift, slam plush, heart-storm ultimate. No school stationery.",
+    "style": "same boy face/hair as Howard but casual: white knit beanie with two round bear ears (pink inner), soft pink tee with tiny generic cute bear face print (NOT any trademarked character), light-blue shorts, white wristbands, pink-trimmed sneakers",
+    "walk": 3.6,
+    "run": 7.4,
+    "voice_id": "e5a0f89f853841e386d22063f9c85d7f",
+    "voice_note": "粤语童声 extra cheerful plush mode",
+    "lines": {
+      "name": "[excited, cute] 公仔豪！",
+      "attack": "[cheerful] 呀哈！",
+      "hurt": "[whiny] 唔好打我啲公仔呀！",
+      "ko": "[sad] 哇呀——我啲公仔呀！",
+      "victory": "[happy] 公仔大勝！"
+    }
+  },
+  "hornam": {
+    "name": "HorNam",
+    "displayname": "HorNam",
+    "author": "spirit-clash OC",
+    "kit": "Angry stretch/swell. Stretch punch, swelling headbutt, stretch uppercut, stomp quake, scream balloon-head ultimate with sound waves.",
+    "style": "always-angry 7yo HK schoolboy, short black spiky hair, flushed cheeks, anger vein, same school polo, red-white sneakers, dark-red backpack, fists clenched",
+    "walk": 3.8,
+    "run": 7.8,
     "voice_id": "5fa1fc8fd9bd4f8e8e4b0422a1a02637",
-    "voice_note": "海綿粵語 energetic young male",
+    "voice_note": "海綿粵語 angry shouting boy",
     "lines": {
-      "name": "[excited, proud] 閃狐！",
-      "attack": "[aggressive shout] 電閃！",
-      "hurt": "[pained] 呃！",
-      "ko": "[defeated groan] 唔得……",
-      "victory": "[cheerful victory] 閃電勝出！"
+      "name": "[angry] 可嵐！",
+      "attack": "[angry shout] 哼！",
+      "hurt": "[angry] 你激嬲我喇！",
+      "ko": "[shouting] 我未嬲完㗎——！",
+      "victory": "[angry proud] 我贏咗啦！"
     }
   },
-  "ironvow": {
-    "name": "Iron Vow",
-    "displayname": "Iron Vow",
-    "author": "fighter-web OC",
-    "kit": "Heavy / armor. Shield Bash, Guard Crush (hold F+P), Greatslash (QCF+H), Oathquake (QCB+H), Armor Charge.",
-    "style": "tall armored knight with silver plate, navy cape, glowing orange crest, heavy claymore, heroic anime painted style",
-    "voice_id": "98cb39ac0b5a4c29af14004c4c50e7c0",
-    "voice_note": "热血战士 powerful dramatic male",
+  "percy": {
+    "name": "Percy",
+    "displayname": "Percy",
+    "author": "spirit-clash OC",
+    "kit": "Tall classmate + Percci Bear partner. Bear rush, pen dart, bear boost jump, bear hug grab, giant Percci adventure ultimate.",
+    "style": "tall 7yo classmate (~4 heads), neat side-parted brown hair, friendly smile, same school uniform, navy backpack — draw ONLY Percy (bear is partner, optional beside)",
+    "walk": 2.8,
+    "run": 5.8,
+    "voice_id": "e5a0f89f853841e386d22063f9c85d7f",
+    "voice_note": "粤语童声 tall friendly classmate",
     "lines": {
-      "name": "[solemn, powerful] 鐵誓！",
-      "attack": "[deep battle cry] 破甲！",
-      "hurt": "[heavy grunt] 哼！",
-      "ko": "[falling] 誓言未完……",
-      "victory": "[noble] 榮譽歸於勝者！"
+      "name": "[friendly] 珀西！",
+      "attack": "[excited] 嘿！",
+      "hurt": "[worried] Percci，救我呀！",
+      "ko": "[calling] Percci——！",
+      "victory": "[happy] Percci 同我贏咗！"
     }
   },
-  "neonpulse": {
-    "name": "Neon Pulse",
-    "displayname": "Neon Pulse",
-    "author": "fighter-web OC",
-    "kit": "Zoner / teleport. Pulse Beam (QCF+P), Drone Mine (QCB+P), Phase Step teleport (QCF+K), Overclock ultra.",
-    "style": "slim cyber mage with magenta hair, holographic coat, glowing circuit tattoos, floating neon orbs, futuristic anime",
-    "voice_id": "2212f2bd64a24b2c9889cf97e758d290",
-    "voice_note": "年輕女粵語 energetic female Cantonese",
+  "tyrus": {
+    "name": "Tyrus",
+    "displayname": "Tyrus",
+    "author": "spirit-clash OC",
+    "kit": "Tennis zoner/rush. Serve ball, forehand drive, jump smash, lob, super tennis-storm ultimate.",
+    "style": "sporty tennis kid, messy brown hair + red sweatband, teal jersey white V-neck number 1, white shorts, red wristbands, teal-white sneakers, red racket in hand",
+    "walk": 4.0,
+    "run": 8.6,
+    "voice_id": "e5a0f89f853841e386d22063f9c85d7f",
+    "voice_note": "粤语童声 sporty tennis kid",
     "lines": {
-      "name": "[cool confident] 霓脈！",
-      "attack": "[sharp] 脈衝！",
-      "hurt": "[hurt] 啊！",
-      "ko": "[glitching] 訊號……斷……",
-      "victory": "[smug] 頻率鎖定。"
+      "name": "[confident] 泰勒斯！",
+      "attack": "[sporty] 喝！",
+      "hurt": "[determined] 我仲未輸㗎！",
+      "ko": "[disappointed] 出界呀——！",
+      "victory": "[excited] Ace！贏咗！"
     }
   },
-  "jadeember": {
-    "name": "Jade Ember",
-    "displayname": "Jade Ember",
-    "author": "fighter-web OC",
-    "kit": "Balanced fire martial. Ember Palm, Fireball (QCF+P), Rising Phoenix (DP+P), Ash Sweep low, Inferno Rush.",
-    "style": "athletic martial artist with jade-green wrap top, black pants, ember-orange hair tips, fire aura accents, hand-painted anime",
-    "voice_id": "561f00551f904161aa70e0bb8aebf11e",
-    "voice_note": "元气香港女声 energetic Cantonese female",
+  "daddy": {
+    "name": "Daddy",
+    "displayname": "Daddy",
+    "author": "spirit-clash OC",
+    "kit": "Food-loving heavy. Chopstick flurry, belly bump, fork launch, plate block / bao toss, all-you-can-eat ultimate.",
+    "style": "very round jolly dad, short dark hair, round glasses, moustache, double chin, tight orange tee over huge belly (sauce stain, belly button peek), khaki shorts, brown sandals",
+    "walk": 2.0,
+    "run": 4.5,
+    "voice_id": "2e15924c969d41a38df379102d07382e",
+    "voice_note": "粵語章魚 jolly hungry dad",
     "lines": {
-      "name": "[bright] 玉焰！",
-      "attack": "[fiery] 燃！",
-      "hurt": "[ouch] 呀！",
-      "ko": "[fading] 火……熄……",
-      "victory": "[cheerful] 火焰不滅！"
-    }
-  },
-  "galequill": {
-    "name": "Gale Quill",
-    "displayname": "Gale Quill",
-    "author": "fighter-web OC",
-    "kit": "Midrange staff / wind. Quill Poke, Cyclone Spin (QCF+K), Sky Dive (air QCB+K), Feather Barrage, Tempest Wall.",
-    "style": "lean wind monk with white-teal robes, long staff tipped with quill blade, flowing scarf, calm determined eyes",
-    "voice_id": "8e5e2efe5c9a4f55bd3b1427ece07e0f",
-    "voice_note": "香港男子 confident energetic male",
-    "lines": {
-      "name": "[calm firm] 風僧！",
-      "attack": "[focused] 疾風！",
-      "hurt": "[grunt] 唔！",
-      "ko": "[soft] 風……停……",
-      "victory": "[serene] 隨風而勝。"
-    }
-  },
-  "duskshade": {
-    "name": "Dusk Shade",
-    "displayname": "Dusk Shade",
-    "author": "fighter-web OC",
-    "kit": "Mixup / trickster. Low shade kick, Fade Step (QCB+K), Twin Shadow (QCF+P), Haunt Grab, Midnight Veil.",
-    "style": "mysterious trickster with violet hooded cloak, dual daggers, pale mask half-hidden, purple mist, sly grin anime painted",
-    "voice_id": "cc488ba472814119b56e70b0df2d3667",
-    "voice_note": "Fizzarolli Cantonese expressive male",
-    "lines": {
-      "name": "[playful dark] 影魅！",
-      "attack": "[sneaky shout] 暗襲！",
-      "hurt": "[hiss] 嘶！",
-      "ko": "[whisper fade] 影……散……",
-      "victory": "[chuckle] 夜未完。"
+      "name": "[laughing] 爸爸！",
+      "attack": "[hungry] 嗱！",
+      "hurt": "[whiny] 唔好打我個肚腩呀！",
+      "ko": "[defeated] 我未食飽㗎——！",
+      "victory": "[laughing] 放題時間！全部食晒！"
     }
   }
 }
