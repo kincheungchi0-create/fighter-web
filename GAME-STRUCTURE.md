@@ -8,7 +8,7 @@ fighter-web/
 │   ├── chars/<name>/        ← 6 Howard-family OCs + Training
 │   │   ├── <name>.def/.sff/.air/.cns/.cmd
 │   │   ├── art/idle.png     ← idle master (Codex / spirit-clash paint)
-│   │   ├── voice/*.mp3      ← Fish Audio Drama 3
+│   │   ├── voice/*.mp3      ← copied from spirit-clash voice bank
 │   │   └── KIT.md           ← archetype + skills (from spirit-clash kits)
 │   ├── data/select.def      ← roster
 │   ├── data/ikemen1/        ← motif (minimal title + Demo Mode)

@@ -1,3 +1,5 @@
+Cast/art/voices from [spirit-clash](https://github.com/kincheungchi0-create/spirit-clash). See `SOURCE.md`.
+
 # fiiight — Ikemen GO in the browser
 
 ### ▶️ Play it now: **https://mathmati.github.io/fiiight/**

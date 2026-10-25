@@ -1,11 +1,10 @@
 # Percy
 
-**Archetype / kit:** Tall classmate + Percci Bear partner. Bear rush, pen dart, bear boost jump, bear hug grab, giant Percci adventure ultimate.
+**Source of truth:** [spirit-clash](https://github.com/kincheungchi0-create/spirit-clash)
+`src/game/rig/percy_kit.ts`, `artgen/master_percy.txt`, `public/assets/paint/percy/`, `public/assets/voice/percy/`.
 
-**Art direction:** tall 7yo classmate (~4 heads), neat side-parted brown hair, friendly smile, same school uniform, navy backpack — draw ONLY Percy (bear is partner, optional beside)
+**Look:** Howard's tall classmate (~4 heads), neat side-parted brown hair, friendly smile, same HKBUAS school uniform + navy backpack. Partner: Percci Bear (light-blue school mascot with blue plaid ear/paw patches, white muzzle, brown nose, green straps) — drawn beside him in the source rig.
 
-**Source:** Borrowed concept from spirit-clash (`artgen/master_percy.txt`, `src/game/rig/percy_kit.ts`).
+**Weapons / kit:** Bear rush / hop / slam, pen dart, bear boost jump, bear hug; giant Percci adventure ultimate.
 
-**Mechanical base:** Adapted Kung Fu Man 720 for playable AI/states. Custom idle in `art/`. Voices (Fish Drama 3) in `voice/`.
-
-**Voice model:** `e5a0f89f853841e386d22063f9c85d7f` — 粤语童声 tall friendly classmate
+**In this build:** Ikemen KFM720 base. Art + voices copied from spirit-clash.

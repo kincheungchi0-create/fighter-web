@@ -1,0 +1,8 @@
+idle run jump fall crouch dash
+block hurt ko victory ready_f strike_f
+ready_up strike_up ready_high strike_down low_strike spin
+air_fwd air_up air_down cast charge ultimate
+idle_ref bear_rush bear_boost bear_hop bear_slam giant
+idle_ref giant_hit giant_up giant_slam
+idle_ref run_1 run_2 run_3 run_4 idle_2
+idle_ref idle_3 dash_2

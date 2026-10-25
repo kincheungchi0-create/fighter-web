@@ -1,17 +1,13 @@
-Use your built-in image_gen tool (NOT any CLI/API fallback script). One image_gen call only.
+$imagegen
 
-Generate ONE original fighting-game character idle pose for an ORIGINAL kids IP (borrowed design from our spirit-clash OC — not any existing franchise trademark):
-- Name: Daddy
-- Design: very round jolly dad, short dark hair, round glasses, moustache, double chin, tight orange tee over huge belly (sauce stain, belly button peek), khaki shorts, brown sandals
-- Kit vibe (props optional in idle, hands mostly empty unless natural): Food-loving heavy
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into the workspace at the exact path given below. Do not write any other code.
 
-- Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions (~3 heads tall unless noted taller/rounder).
-- Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose, side / three-quarter view FACING RIGHT, feet planted, generous empty transparent padding. Portrait about 2:3.
-- Background: fully transparent real alpha. No floor, shadow, scenery, text, watermark, logo, extra characters.
+The attached image is the CURRENT low-detail version of this character, drawn by our game engine. Redraw THIS SAME character as premium hand-painted artwork: keep the same face, hair, outfit, colors, props and proportions, and the same cheerful look, but with real painted quality.
 
-After generating, save/copy the PNG to exactly:
-/workspace/fiiight/artgen/out/daddy_idle.png
-Also copy the same file to:
-/workspace/fiiight/content/chars/daddy/art/idle.png
+Character: DADDY, Howard's jolly, food-loving and very ROUND dad, chibi (about 3 heads tall, extremely round and chubby). Short dark hair, round glasses, a thick moustache, a double chin and a big happy smile. Outfit: a bright orange T-shirt stretched tightly over a HUGE round belly with the belly button peeking out under the hem, khaki shorts, bare legs, brown sandals. A little sauce stain on the shirt. Hands empty.
 
-Do not write other code. At the end print both destination paths and whether each file exists.
+1. artgen/out/master_daddy.png
+
+Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions.
+Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose with the arms hanging slightly bent at the sides (so it can later be cut into arm and leg parts), side / three-quarter side view, FACING RIGHT, feet planted, generous empty transparent padding. Portrait orientation about 2:3.
+Background: fully transparent (real alpha channel). No floor, no ground shadow, no scenery, no text, no watermark, no frame, no extra characters.

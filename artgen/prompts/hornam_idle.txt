@@ -1,17 +1,13 @@
-Use your built-in image_gen tool (NOT any CLI/API fallback script). One image_gen call only.
+$imagegen
 
-Generate ONE original fighting-game character idle pose for an ORIGINAL kids IP (borrowed design from our spirit-clash OC — not any existing franchise trademark):
-- Name: HorNam
-- Design: always-angry 7yo HK schoolboy, short black spiky hair, flushed cheeks, anger vein, same school polo, red-white sneakers, dark-red backpack, fists clenched
-- Kit vibe (props optional in idle, hands mostly empty unless natural): Angry stretch/swell
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into the workspace at the exact path given below. Do not write any other code.
 
-- Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions (~3 heads tall unless noted taller/rounder).
-- Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose, side / three-quarter view FACING RIGHT, feet planted, generous empty transparent padding. Portrait about 2:3.
-- Background: fully transparent real alpha. No floor, shadow, scenery, text, watermark, logo, extra characters.
+The attached image is the CURRENT low-detail version of this character, drawn by our game engine. Redraw THIS SAME character as premium hand-painted artwork: keep the same face, hair, outfit, colors, props and proportions, and the same cheerful look, but with real painted quality.
 
-After generating, save/copy the PNG to exactly:
-/workspace/fiiight/artgen/out/hornam_idle.png
-Also copy the same file to:
-/workspace/fiiight/content/chars/hornam/art/idle.png
+Character: HOR NAM, an always-angry 7-year-old Hong Kong schoolboy, chibi (about 3 heads tall). Short black spiky hair, flushed red cheeks, angry reddish eyes with furrowed brows, gritted teeth, a small red anger-vein mark above the hair. School uniform: white polo shirt with a blue-and-yellow trimmed collar and a small round school badge, navy shorts, white socks, red-and-white sneakers, black wristbands, a dark-red backpack. Hands empty, fists slightly clenched.
 
-Do not write other code. At the end print both destination paths and whether each file exists.
+1. artgen/out/master_hornam.png
+
+Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions.
+Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose with the arms hanging slightly bent at the sides (so it can later be cut into arm and leg parts), side / three-quarter side view, FACING RIGHT, feet planted, generous empty transparent padding. Portrait orientation about 2:3.
+Background: fully transparent (real alpha channel). No floor, no ground shadow, no scenery, no text, no watermark, no frame, no extra characters.

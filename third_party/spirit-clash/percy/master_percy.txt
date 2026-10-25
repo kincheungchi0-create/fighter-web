@@ -1,0 +1,13 @@
+$imagegen
+
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into the workspace at the exact path given below. Do not write any other code.
+
+The attached image is the CURRENT low-detail version of this character, drawn by our game engine. Redraw THIS SAME character as premium hand-painted artwork: keep the same face, hair, outfit, colors, props and proportions, and the same cheerful look, but with real painted quality.
+
+Character: PERCY, Howard's TALL friendly classmate: a 7-year-old schoolboy who is noticeably TALLER than usual (about 4 heads tall, long legs). Neat short side-parted brown hair, warm brown eyes, a friendly smile. School uniform: white polo shirt with a blue-and-yellow trimmed collar and a small round school badge, navy shorts, white socks, blue-and-white sneakers, black wristbands, a navy backpack with yellow accents. Hands empty. Draw ONLY Percy, NOT the bear.
+
+1. artgen/out/master_percy.png
+
+Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions.
+Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose with the arms hanging slightly bent at the sides (so it can later be cut into arm and leg parts), side / three-quarter side view, FACING RIGHT, feet planted, generous empty transparent padding. Portrait orientation about 2:3.
+Background: fully transparent (real alpha channel). No floor, no ground shadow, no scenery, no text, no watermark, no frame, no extra characters.

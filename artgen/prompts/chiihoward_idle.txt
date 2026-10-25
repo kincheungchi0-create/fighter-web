@@ -1,17 +1,13 @@
-Use your built-in image_gen tool (NOT any CLI/API fallback script). One image_gen call only.
+$imagegen
 
-Generate ONE original fighting-game character idle pose for an ORIGINAL kids IP (borrowed design from our spirit-clash OC — not any existing franchise trademark):
-- Name: ChiiHoward
-- Design: same boy face/hair as Howard but casual: white knit beanie with two round bear ears (pink inner), soft pink tee with tiny generic cute bear face print (NOT any trademarked character), light-blue shorts, white wristbands, pink-trimmed sneakers
-- Kit vibe (props optional in idle, hands mostly empty unless natural): Cute plush kit
-- IMPORTANT: Do NOT depict any trademarked Sanrio/Chiikawa character face or logo. Shirt print must be a generic simple cute round bear face doodle only.
-- Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions (~3 heads tall unless noted taller/rounder).
-- Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose, side / three-quarter view FACING RIGHT, feet planted, generous empty transparent padding. Portrait about 2:3.
-- Background: fully transparent real alpha. No floor, shadow, scenery, text, watermark, logo, extra characters.
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into the workspace at the exact path given below. Do not write any other code.
 
-After generating, save/copy the PNG to exactly:
-/workspace/fiiight/artgen/out/chiihoward_idle.png
-Also copy the same file to:
-/workspace/fiiight/content/chars/chiihoward/art/idle.png
+The attached image is the CURRENT low-detail version of this character, drawn by our game engine. Redraw THIS SAME character as premium hand-painted artwork: keep the same face, hair, outfit, colors, props and proportions, and the same cheerful look, but with real painted quality.
 
-Do not write other code. At the end print both destination paths and whether each file exists.
+Character: CHIIKAWA HOWARD, the same cheerful 7-year-old boy as Howard (same face, same messy brown hair peeking out) but in casual clothes: a white knit beanie with two round bear ears (pink inner ears), a soft pink T-shirt with a tiny cute Chiikawa face print, light-blue shorts, white wristbands, white socks and pink-trimmed sneakers. NO backpack, NO school uniform, NO school items. Hands empty.
+
+1. artgen/out/master_chiihoward.png
+
+Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions.
+Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose with the arms hanging slightly bent at the sides (so it can later be cut into arm and leg parts), side / three-quarter side view, FACING RIGHT, feet planted, generous empty transparent padding. Portrait orientation about 2:3.
+Background: fully transparent (real alpha channel). No floor, no ground shadow, no scenery, no text, no watermark, no frame, no extra characters.

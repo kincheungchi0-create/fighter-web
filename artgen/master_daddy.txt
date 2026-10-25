@@ -1,0 +1,13 @@
+$imagegen
+
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into the workspace at the exact path given below. Do not write any other code.
+
+The attached image is the CURRENT low-detail version of this character, drawn by our game engine. Redraw THIS SAME character as premium hand-painted artwork: keep the same face, hair, outfit, colors, props and proportions, and the same cheerful look, but with real painted quality.
+
+Character: DADDY, Howard's jolly, food-loving and very ROUND dad, chibi (about 3 heads tall, extremely round and chubby). Short dark hair, round glasses, a thick moustache, a double chin and a big happy smile. Outfit: a bright orange T-shirt stretched tightly over a HUGE round belly with the belly button peeking out under the hem, khaki shorts, bare legs, brown sandals. A little sauce stain on the shirt. Hands empty.
+
+1. artgen/out/master_daddy.png
+
+Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions.
+Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose with the arms hanging slightly bent at the sides (so it can later be cut into arm and leg parts), side / three-quarter side view, FACING RIGHT, feet planted, generous empty transparent padding. Portrait orientation about 2:3.
+Background: fully transparent (real alpha channel). No floor, no ground shadow, no scenery, no text, no watermark, no frame, no extra characters.

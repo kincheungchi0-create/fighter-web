@@ -1,0 +1,21 @@
+$imagegen
+
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids. Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into the workspace at the exact path given below. Do not write any other code.
+
+The attached image(s) are the approved MASTER painting of this character. Draw the SAME character in every pose below: identical face, hair, outfit, colors, proportions and painting style (premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, chibi proportions).
+
+
+Character: HOR NAM, the always-angry 7-year-old schoolboy with black spiky hair and flushed red face, whose arms and legs stretch like rubber and whose head swells when he attacks.
+
+Draw these poses:
+1. fuming idle stance, fists clenched at his sides, scowling, small steam puffs rising from his head.
+2. diving headfirst for a headbutt toward the right, his swollen red head leading, body horizontal.
+(Only poses 1-2 are needed; leave the remaining cells EMPTY and transparent.)
+
+LAYOUT RULES (very important, the image will be cut apart by a program):
+- ONE image containing exactly SIX separate poses of the same character in a clean grid of 3 columns x 2 rows, numbered 1-6 in reading order (row 1: poses 1, 2, 3; row 2: poses 4, 5, 6).
+- Every pose is the complete figure with its props / effects close to the body, facing RIGHT, and each pose stays inside its own cell with empty transparent space around it. Nothing touches or overlaps a neighbouring pose, nothing is cropped by the image edge.
+- The character is drawn at the SAME SCALE in all six cells (a standing figure is the same height in every cell); feet sit near the bottom of each cell, except airborne poses.
+- Fully TRANSPARENT background (real alpha channel). No floor, no ground shadow, no scenery, no frames, no grid lines, no numbers, no labels, no text, no watermark. Landscape image, use the largest size.
+
+Save as: artgen/out/pose_hornam_5.png

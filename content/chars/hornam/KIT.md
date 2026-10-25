@@ -1,11 +1,10 @@
 # HorNam
 
-**Archetype / kit:** Angry stretch/swell. Stretch punch, swelling headbutt, stretch uppercut, stomp quake, scream balloon-head ultimate with sound waves.
+**Source of truth:** [spirit-clash](https://github.com/kincheungchi0-create/spirit-clash)
+`src/game/rig/hornam_kit.ts`, `artgen/master_hornam.txt`, `public/assets/paint/hornam/`, `public/assets/voice/hornam/`.
 
-**Art direction:** always-angry 7yo HK schoolboy, short black spiky hair, flushed cheeks, anger vein, same school polo, red-white sneakers, dark-red backpack, fists clenched
+**Look:** Always-angry HKBUAS boy (same school uniform as Howard). Short black spiky hair, red flush, pulsing anger mark + steam when mad; red-white sneakers, dark-red backpack.
 
-**Source:** Borrowed concept from spirit-clash (`artgen/master_hornam.txt`, `src/game/rig/hornam_kit.ts`).
+**Weapons / kit:** Angry stretch/swell — stretch punch, swelling headbutt, stretch uppercut, stomp; ultimate balloons the head while he screams (sound waves).
 
-**Mechanical base:** Adapted Kung Fu Man 720 for playable AI/states. Custom idle in `art/`. Voices (Fish Drama 3) in `voice/`.
-
-**Voice model:** `5fa1fc8fd9bd4f8e8e4b0422a1a02637` — 海綿粵語 angry shouting boy
+**In this build:** Ikemen KFM720 base. Art + voices copied from spirit-clash.

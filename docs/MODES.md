@@ -1,11 +1,11 @@
-# Title modes (minimal)
+# Title modes (minimal — spirit-clash watch intent)
 
-Fighter Web keeps a short title menu only:
+Fighter Web keeps a short title menu only (Ikemen clutter hidden via blank `menu.itemname.*`):
 
-1. **CPU VS CPU** — Watch Mode / AI vs AI (required auto-play). Also Demo Mode after ~3s idle on title (`title.waittime = 180`).
-2. **VERSUS** — 1P vs 2P local.
+1. **CPU VS CPU** — Watch / AI vs AI (required). Also Demo Mode after ~3s idle on title (`title.waittime = 180`), matching spirit-clash CPU vs CPU watch.
+2. **VERSUS** — local 1P vs 2P.
 3. **EXIT**
 
-Hidden (blank `menu.itemname.*` in `content/data/ikemen1/system.def`): Arcade, Story, Network, Practice/Training menu, Mission/Survival/Time Attack, Options, team/co-op/netplay entries, Randomtest, Replay.
+Hidden: Arcade, Story, Network / Netplay, Practice/Training menus, Mission / Survival / Time Attack, Options, Team / co-op entries, Randomtest, Replay.
 
-See also `docs/CPU-VS-CPU.md`.
+See `docs/CPU-VS-CPU.md` and `SOURCE.md`.

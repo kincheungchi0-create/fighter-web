@@ -1,0 +1,24 @@
+$imagegen
+
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids. Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into the workspace at the exact path given below. Do not write any other code.
+
+The attached image(s) are the approved MASTER painting of this character. Draw the SAME character in every pose below: identical face, hair, outfit, colors, proportions and painting style (premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, chibi proportions).
+
+
+Character: CHIIKAWA HOWARD, the cheerful boy in a white bear-ear beanie, pink T-shirt and light-blue shorts, who fights with cute plush dolls (a round white plush with dot eyes and pink cheeks, a white plush with a blue cap, a big yellow bunny plush).
+
+Draw these poses:
+1. crouched low with a blue-capped white plush doll held low behind him, ready to swing it up.
+2. a rising swing: the blue-capped plush doll swung high up and forward with a pink heart trail, leaping up.
+3. both arms raised high holding a big yellow bunny plush overhead, leaning back.
+4. slamming a big yellow bunny plush down hard in front of him with both hands, impact sparkles, leaning far forward.
+5. low sweeping swing with the yellow bunny plush along the floor, crouched.
+6. mid-air spin swinging the blue-capped plush around in a circle, hearts swirling.
+
+LAYOUT RULES (very important, the image will be cut apart by a program):
+- ONE image containing exactly SIX separate poses of the same character in a clean grid of 3 columns x 2 rows, numbered 1-6 in reading order (row 1: poses 1, 2, 3; row 2: poses 4, 5, 6).
+- Every pose is the complete figure with its props / effects close to the body, facing RIGHT, and each pose stays inside its own cell with empty transparent space around it. Nothing touches or overlaps a neighbouring pose, nothing is cropped by the image edge.
+- The character is drawn at the SAME SCALE in all six cells (a standing figure is the same height in every cell); feet sit near the bottom of each cell, except airborne poses.
+- Fully TRANSPARENT background (real alpha channel). No floor, no ground shadow, no scenery, no frames, no grid lines, no numbers, no labels, no text, no watermark. Landscape image, use the largest size.
+
+Save as: artgen/out/pose_chiihoward_3.png

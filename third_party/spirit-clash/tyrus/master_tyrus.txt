@@ -1,0 +1,13 @@
+$imagegen
+
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into the workspace at the exact path given below. Do not write any other code.
+
+The attached image is the CURRENT low-detail version of this character, drawn by our game engine. Redraw THIS SAME character as premium hand-painted artwork: keep the same face, hair, outfit, colors, props and proportions, and the same cheerful look, but with real painted quality.
+
+Character: TYRUS, a sporty 7-year-old tennis kid, chibi (about 3 and a half heads tall), athletic and confident. Messy brown hair held back by a red sweatband, bright brown eyes, an eager grin. Outfit: teal sports jersey with a white V-neck and white side stripes and a white number 1 on the chest, white tennis shorts, red wristbands, white socks and teal-and-white sneakers. He holds a red tennis racket with white strings in his right hand, racket pointing down and slightly forward.
+
+1. artgen/out/master_tyrus.png
+
+Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions.
+Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose with the arms hanging slightly bent at the sides (so it can later be cut into arm and leg parts), side / three-quarter side view, FACING RIGHT, feet planted, generous empty transparent padding. Portrait orientation about 2:3.
+Background: fully transparent (real alpha channel). No floor, no ground shadow, no scenery, no text, no watermark, no frame, no extra characters.
