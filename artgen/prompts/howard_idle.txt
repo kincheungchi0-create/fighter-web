@@ -1,13 +1,18 @@
 $imagegen
 
-You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into the workspace at the exact path given below. Do not write any other code.
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into BOTH workspace paths given below. Do not write any other code. Overwrite if those files already exist.
 
-The attached image is the CURRENT low-detail version of this character, drawn by our game engine. Redraw THIS SAME character as premium hand-painted artwork: keep the same face, hair, outfit, colors, props and proportions, and the same cheerful look, but with real painted quality.
+The attached image(s) are the approved REFERENCE of this exact character from our spirit-clash game. Keep the SAME face, hair, outfit, colors, props and proportions — redraw as premium painted sprite quality if the ref is lower detail.
 
-Character: HOWARD, a cheerful clever 7-year-old Hong Kong primary-school boy, chibi (about 3 heads tall). Messy fluffy brown hair with spiky tufts, big brown eyes, a confident grin. School uniform: white polo shirt with a blue-and-yellow trimmed collar and a small round blue-and-gold school badge, navy shorts, white socks, blue-and-white sneakers, black wristbands, and a navy backpack with yellow accents. Hands empty (no weapons).
+Character: HOWARD — cheerful clever 7-year-old Hong Kong primary-school boy, chibi (~3 heads). Messy fluffy brown hair with spiky tufts, big brown eyes, confident grin. White polo with blue-and-yellow trimmed collar and school badge, navy shorts, white socks, blue-and-white sneakers, black wristbands, navy backpack with yellow accents.
 
-1. artgen/out/master_howard.png
-
+Pose: relaxed neutral idle standing pose, arms slightly bent at sides, feet planted, confident kids-game fighting idle
+Framing: ONE character, full body, nothing cropped, side / three-quarter view FACING RIGHT, generous empty transparent padding.
 Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions.
-Framing: ONE character, full body head to toe, nothing cropped, relaxed neutral idle standing pose with the arms hanging slightly bent at the sides (so it can later be cut into arm and leg parts), side / three-quarter side view, FACING RIGHT, feet planted, generous empty transparent padding. Portrait orientation about 2:3.
-Background: fully transparent (real alpha channel). No floor, no ground shadow, no scenery, no text, no watermark, no frame, no extra characters.
+Background: fully transparent real alpha. No floor, shadow, scenery, text, watermark, logo, extra characters, frames.
+
+Save/copy the PNG to exactly:
+1. /workspace/fiiight/artgen/out/howard_idle.png
+2. /workspace/fiiight/content/chars/howard/art/idle.png
+
+At the end print both destination paths and whether each file exists.

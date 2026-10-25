@@ -65,7 +65,7 @@ if [[ -d "$ROOT/content" ]]; then
 		[[ -d "$d" ]] && overlay_dirs+=("$(basename "$d")")
 	done
 	if [[ ${#overlay_dirs[@]} -gt 0 ]]; then
-		(cd "$ROOT/content" && zip -q -r "$ROOT/web/content.zip" "${overlay_dirs[@]}" -x '*.git*' -x 'MANIFEST.md')
+		(cd "$ROOT/content" && zip -q -r "$ROOT/web/content.zip" "${overlay_dirs[@]}" -x '*.git*' -x 'MANIFEST.md' -x 'chars/*/art/*' -x 'chars/*/art/**')
 	fi
 fi
 echo "==> done: $(du -h "$ROOT/web/content.zip" | cut -f1) content.zip"

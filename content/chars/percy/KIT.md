@@ -7,4 +7,4 @@
 
 **Weapons / kit:** Bear rush / hop / slam, pen dart, bear boost jump, bear hug; giant Percci adventure ultimate.
 
-**In this build:** Ikemen KFM720 base. Art + voices copied from spirit-clash.
+**Fight sprites:** Codex/spirit-clash paint packed into `percy.sff` (SFF v2 PNG) via `tools/pack_sff_v2.py` — not KFM visuals. Mechanical base remains KFM720 `.air/.cmd/.cns`.

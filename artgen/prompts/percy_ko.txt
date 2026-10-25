@@ -1,0 +1,18 @@
+$imagegen
+
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into BOTH workspace paths given below. Do not write any other code. Overwrite if those files already exist.
+
+The attached image(s) are the approved REFERENCE of this exact character from our spirit-clash game. Keep the SAME face, hair, outfit, colors, props and proportions — redraw as premium painted sprite quality if the ref is lower detail.
+
+Character: PERCY — Howard's TALL friendly classmate, 7yo, noticeably taller (~4 heads, long legs). Neat short side-parted brown hair, warm brown eyes, friendly smile. White polo blue-yellow trim + school badge, navy shorts, white socks, blue-and-white sneakers, black wristbands, navy backpack yellow accents. Draw ONLY Percy, NOT a bear.
+
+Pose: knocked out lying / crumpled on the ground facing right, defeated but kid-friendly silly, not scary
+Framing: ONE character, full body, nothing cropped, side / three-quarter view FACING RIGHT, generous empty transparent padding.
+Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions.
+Background: fully transparent real alpha. No floor, shadow, scenery, text, watermark, logo, extra characters, frames.
+
+Save/copy the PNG to exactly:
+1. /workspace/fiiight/artgen/out/percy_ko.png
+2. /workspace/fiiight/content/chars/percy/art/ko.png
+
+At the end print both destination paths and whether each file exists.

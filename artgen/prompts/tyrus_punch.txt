@@ -1,0 +1,18 @@
+$imagegen
+
+You are the character artist for an original, cheerful 2D anime platform-fighting game for kids ("SUPER HOWARD FRIENDS & FAMILY SMASH BROS ULTIMATE"). Use your built-in image_gen tool (NOT the CLI/API fallback). Make exactly ONE image_gen call. After the image is generated, copy the PNG into BOTH workspace paths given below. Do not write any other code. Overwrite if those files already exist.
+
+The attached image(s) are the approved REFERENCE of this exact character from our spirit-clash game. Keep the SAME face, hair, outfit, colors, props and proportions — redraw as premium painted sprite quality if the ref is lower detail.
+
+Character: TYRUS — sporty 7yo tennis kid, chibi (~3.5 heads), athletic. Messy brown hair with red sweatband, bright brown eyes, eager grin. Teal sports jersey white V-neck white side stripes white number 1, white tennis shorts, red wristbands, white socks, teal-and-white sneakers. Holds red tennis racket in right hand.
+
+Pose: forward punch / strike pose mid-attack, leading fist / weapon extended to the RIGHT, dynamic action lines OK near body only
+Framing: ONE character, full body, nothing cropped, side / three-quarter view FACING RIGHT, generous empty transparent padding.
+Style: premium hand-painted 2D anime game illustration, clean bold dark outlines, cel shading with soft painted highlights, rich saturated colors, commercial indie fighting-game sprite quality, chibi proportions.
+Background: fully transparent real alpha. No floor, shadow, scenery, text, watermark, logo, extra characters, frames.
+
+Save/copy the PNG to exactly:
+1. /workspace/fiiight/artgen/out/tyrus_punch.png
+2. /workspace/fiiight/content/chars/tyrus/art/punch.png
+
+At the end print both destination paths and whether each file exists.

@@ -15,14 +15,19 @@ https://github.com/kincheungchi0-create/spirit-clash
 | Tyrus | `tyrus_kit.ts` | `paint/tyrus/` | `voice/tyrus/` |
 | Daddy | `daddy_kit.ts` | `paint/daddy/` | `voice/daddy/` |
 
-Masters / pose prompts: `artgen/master_*.txt`, `artgen/pose_*`. Local mirrors of kits/masters/scripts: `third_party/spirit-clash/<char>/`.
+Masters / pose prompts: `artgen/master_*.txt`, `artgen/pose_*`. Local mirrors: `third_party/spirit-clash/<char>/`.
 
-## What was copied vs regenerated
+## Art pipeline (fight sprites)
 
-- **Copied (not regenerated):** paint idle + portrait (webp→png), core voice lines (`atk1`→attack, `hurt1`→hurt, `ko`, `select`→name, `win1`→victory), announcer name takes → `content/sound/announcer/`, kit/master/pose/script text into `third_party/`.
-- **Not regenerated this pass:** no new Codex `$imagegen`, no new Fish TTS.
-- **Engine-only (Ikemen):** KFM720 `.air/.cmd/.cns/.sff/.snd` mechanical base + slim title menu (CPU VS CPU / VERSUS / EXIT). Not inventing new modes or a new cast.
+- **Codex CLI `$imagegen` (required for hero looks):** regenerated full-body `idle.png` for Howard, ChiiHoward, HorNam, Percy, Tyrus via `artgen/gen_one.sh` + spirit-clash paint refs. Daddy idle fell back to spirit-clash paint after Codex 429 rate-limit (retry logged).
+- **Portraits:** spirit-clash `portrait.webp` → `art/portrait.png` (select group 9000).
+- **Combat / walk / hurt / etc.:** complementary frames converted from spirit-clash `public/assets/paint/<char>/*.webp` into `content/chars/<char>/art/`.
+- **SFF pack:** `tools/pack_sff_v2.py` writes unique Elecbyte SFF v2 (PNG RGBA format 12) per character. Maps OC art into KFM720-compatible sprite groups so existing `.air/.cmd/.cns` still run. **In-match sprites are OCs, not Kung Fu Man.**
+- **Voices:** unchanged Fish copies from spirit-clash.
+- **Modes:** CPU VS CPU / VERSUS / EXIT only (`docs/MODES.md`).
 
-## Modes
+## Residual limitations
 
-See `docs/MODES.md`. Match spirit-clash intent: primary **CPU vs CPU watch**, plus simple Versus.
+- Many attack / special AIR frames reuse a single strike / kick / hurt pose (linked SFF sprites) rather than full frame-by-frame anims.
+- Clsn boxes still from KFM720 — hitboxes may not perfectly hug chibi silhouettes.
+- Daddy idle not Codex-regenerated this pass (rate limit); still OC paint, not KFM.

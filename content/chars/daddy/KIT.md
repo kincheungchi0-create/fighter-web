@@ -7,4 +7,4 @@
 
 **Weapons / kit:** Food heavy — chopstick flurry, belly bump, fork launch, dinner-knife, plate block / bao toss, chomp bite; all-you-can-eat food-storm ultimate.
 
-**In this build:** Ikemen KFM720 base. Art + voices copied from spirit-clash.
+**Fight sprites:** Codex/spirit-clash paint packed into `daddy.sff` (SFF v2 PNG) via `tools/pack_sff_v2.py` — not KFM visuals. Mechanical base remains KFM720 `.air/.cmd/.cns`.

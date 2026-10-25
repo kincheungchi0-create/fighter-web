@@ -7,4 +7,4 @@
 
 **Weapons / kit:** Angry stretch/swell — stretch punch, swelling headbutt, stretch uppercut, stomp; ultimate balloons the head while he screams (sound waves).
 
-**In this build:** Ikemen KFM720 base. Art + voices copied from spirit-clash.
+**Fight sprites:** Codex/spirit-clash paint packed into `hornam.sff` (SFF v2 PNG) via `tools/pack_sff_v2.py` — not KFM visuals. Mechanical base remains KFM720 `.air/.cmd/.cns`.

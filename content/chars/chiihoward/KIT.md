@@ -7,4 +7,4 @@
 
 **Weapons / kit:** Plush kit — soft plush swipes (chiikawa / hachiware / usagi dolls in source rig), rolling plush rush, flying-plush lift, slam plush; heart-storm ultimate.
 
-**In this build:** Ikemen KFM720 base. Art + voices copied from spirit-clash paint/voice banks (not regenerated).
+**Fight sprites:** Codex/spirit-clash paint packed into `chiihoward.sff` (SFF v2 PNG) via `tools/pack_sff_v2.py` — not KFM visuals. Mechanical base remains KFM720 `.air/.cmd/.cns`.

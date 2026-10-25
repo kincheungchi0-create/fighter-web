@@ -7,4 +7,4 @@
 
 **Weapons / kit:** Stationery rush — giant yellow pencil poke, ballpoint-pen sword slash, teal textbook shield (opens), spiral notebook projectile, wooden ruler smash; homework / alphabet storm ultimate (flying pages + letters).
 
-**In this build:** Ikemen KFM720 mechanical base. Idle + portrait copied from spirit-clash paint. Voices copied from spirit-clash Fish takes (`atk1`/`hurt1`/`ko`/`select`/`win1`).
+**Fight sprites:** Codex/spirit-clash paint packed into `howard.sff` (SFF v2 PNG) via `tools/pack_sff_v2.py` — not KFM visuals. Mechanical base remains KFM720 `.air/.cmd/.cns`.
