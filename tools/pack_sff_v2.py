@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 """Pack RGBA PNGs into Elecbyte SFF v2 (format 12) for Ikemen GO.
 
+Scale policy (Howard / OC fight sprites):
+  - Match KFM720 standing sprite height (~420px feet-to-head in 1280x720 localcoord).
+  - Each fight frame scales to a pose target (stand=KFM_STAND_H, crouch~62%)
+    so inconsistent Codex source sizes do not make attacks jump big/small.
+  - Feet on a shared baseline; axis at feet center.
+
 Usage:
   python3 tools/pack_sff_v2.py --char howard
   python3 tools/pack_sff_v2.py --all
@@ -9,168 +15,177 @@ from __future__ import annotations
 
 import argparse
 import io
+import re
 import struct
 from pathlib import Path
 
-from PIL import Image, ImageEnhance
+from PIL import Image
 
 ROOT = Path("/workspace/fiiight")
 CHARS = ["howard", "chiihoward", "hornam", "percy", "tyrus", "daddy"]
 
-# Target fight sprite height roughly matching KFM720 idle (~420px)
-TARGET_H = 360
+# KFM720 idle group 0 heights are 420–424px (axis near feet). Match that.
+KFM_STAND_H = 420
+# Extra canvas pad so limbs in attack frames are not clipped after uniform scale.
+CANVAS_PAD_X = 80
+CANVAS_PAD_TOP = 40
+CANVAS_PAD_BOTTOM = 4
 
-# Map art pose name -> list of (group, index) to emit.
-# We fill every group/index the KFM .air references so missing-sprite
-# fallbacks don't flash blank. Same pose is linked (size=0) after first write.
-POSE_TO_GROUPS: dict[str, list[tuple[int, int]]] = {
-    # Idle breathing: slight variants if we have idle_2/3 else same
-    "idle": [(0, i) for i in range(6)],
-    "walk": [(20, i) for i in range(16)] + [(21, i) for i in range(16)],
-    "crouch": [(11, 0), (11, 1), (11, 2), (5, 0), (6, 0)],
-    "jump": (
-        [(41, i) for i in range(9)]
-        + [(42, i) for i in (0, 1, 3, 4, 5)]
-        + [(43, 0), (43, 1)]
-    ),
-    "punch": (
-        [(200, i) for i in range(3)]
-        + [(210, i) for i in range(6)]
-        + [(100, i) for i in range(6)]
-        + [(181, i) for i in range(7)]
-        + [(191, i) for i in range(4)]
-        + [(192, i) for i in range(2)]
-    ),
-    "kick": (
-        [(230, i) for i in range(3)]
-        + [(240, i) for i in range(6)]
-        + [(400, i) for i in range(2)]
-        + [(410, i) for i in range(5)]
-        + [(430, i) for i in range(4)]
-        + [(440, i) for i in range(7)]
-        + [(600, i) for i in range(2)]
-        + [(610, i) for i in range(4)]
-        + [(630, 1), (630, 2)]
-        + [(640, i) for i in range(3)]
-    ),
-    "hurt": (
-        [(5000, i) for i in (0, 10, 11, 20, 21)]
-        + [(5010, i) for i in (0, 10, 20, 21)]
-        + [(5011, 0)]
-        + [(5020, i) for i in (0, 10, 20)]
-        + [(5030, i) for i in (0, 10, 30, 31, 40, 50)]
-        + [(5031, 0)]
-        + [(5040, i) for i in (0, 1, 10, 11, 20)]
-        + [(5060, i) for i in (0, 1, 10)]
-        + [(5061, 0)]
-        + [(5071, i) for i in (0, 10, 20)]
-        + [(5300, i) for i in range(4)]
-    ),
-    "ko": [(120, i) for i in range(3)] + [(121, 0), (122, 0)],
-    "victory": [(180, 0)] if False else [],  # filled below via specials
-    "portrait": [(9000, 0), (9000, 1)],
-    # specials / extras mapped onto remaining KFM groups
-    "block": [(120, 0)],  # overwritten by richer map below
-    "ready_f": [(1000, i) for i in range(8)],
-    "strike_up": [(1050, i) for i in range(8)] + [(1052, i) for i in range(4)] + [(1055, i) for i in range(8)],
-    "strike_down": [(1100, i) for i in range(10)],
-    "spin": [(1210, i) for i in range(7)],
-    "air_fwd": [(1300, i) for i in range(3)] + [(1320, i) for i in range(3)] + [(1340, i) for i in range(2)],
-    "cast": [(1400, i) for i in range(8)],
-    "charge": [(800, i) for i in range(13)],
-    "ultimate": [(1400, i) for i in range(8)],
-    "dash": [(100, i) for i in range(6)],
-    "fall": [(42, i) for i in (0, 1, 3, 4, 5)],
-}
+FRAME_RE = re.compile(r"^([a-z_]+?)_(\d+)$")
 
-# Cleaner explicit group coverage built at runtime
+
+def load_art(char: str) -> dict[str, Path]:
+    """Load art/*.png plus art/frames/*.png. Frame keys keep numeric suffix."""
+    out: dict[str, Path] = {}
+    base = ROOT / "content" / "chars" / char / "art"
+    frames = base / "frames"
+    if base.is_dir():
+        for p in base.glob("*.png"):
+            out[p.stem] = p
+    if frames.is_dir():
+        for p in sorted(frames.glob("*.png")):
+            out[p.stem] = p  # frames override same-named top-level if any
+    if "idle" not in out and "idle_00" in out:
+        out["idle"] = out["idle_00"]
+    if "idle" not in out and "idle_paint" in out:
+        out["idle"] = out["idle_paint"]
+    if "portrait" not in out and "portrait_paint" in out:
+        out["portrait"] = out["portrait_paint"]
+    return out
+
+
+def list_frames(art: dict[str, Path], prefix: str) -> list[str]:
+    """Return sorted pose keys like idle_00.. for a prefix, else []."""
+    keys = []
+    for k in art:
+        m = FRAME_RE.match(k)
+        if m and m.group(1) == prefix:
+            keys.append(k)
+    keys.sort(key=lambda k: int(FRAME_RE.match(k).group(2)))
+    return keys
+
+
+def alpha_bbox(im: Image.Image, thr: int = 8):
+    a = im.split()[-1]
+    return a.point(lambda v: 255 if v > thr else 0).getbbox()
+
+
+def trim_rgba(path: Path) -> Image.Image:
+    im = Image.open(path).convert("RGBA")
+    bbox = alpha_bbox(im)
+    if bbox:
+        im = im.crop(bbox)
+    return im
+
+
+def measure_body_h(path: Path) -> int:
+    im = trim_rgba(path)
+    return max(1, im.size[1])
+
+
 def build_group_plan(art: dict[str, Path]) -> list[tuple[int, int, str]]:
-    """Return list of (group, index, pose_key) covering AIR-needed slots."""
+    """(group, index, pose_key) — prefer numbered frames; fall back to single poses."""
+
     def pick(*names: str) -> str:
         for n in names:
             if n in art:
                 return n
         return "idle"
 
+    def cycle(keys: list[str], fallbacks: tuple[str, ...], n: int) -> list[str]:
+        if not keys:
+            keys = [pick(*fallbacks)]
+        return [keys[i % len(keys)] for i in range(n)]
+
     plan: list[tuple[int, int, str]] = []
 
-    idle = pick("idle", "idle_2", "idle_3")
-    idle2 = pick("idle_2", "idle", "idle_3")
-    idle3 = pick("idle_3", "idle_2", "idle")
-    for i, p in enumerate([idle, idle2, idle3, idle2, idle, idle]):
+    idle_f = list_frames(art, "idle")
+    if not idle_f:
+        idle_f = [pick("idle", "idle_2", "idle_3")]
+        for alt in ("idle_2", "idle_3"):
+            if alt in art and alt not in idle_f:
+                idle_f.append(alt)
+    for i, p in enumerate(cycle(idle_f, ("idle",), 6)):
         plan.append((0, i, p))
 
-    walk = pick("walk", "run_1", "idle")
-    runs = [pick(f"run_{i}", "walk", "idle") for i in range(1, 5)]
-    walk_cycle = (runs + [walk]) * 3 + runs[:1]  # 16
-    for i in range(16):
-        plan.append((20, i, walk_cycle[i % len(walk_cycle)]))
-        plan.append((21, i, walk_cycle[(i + 2) % len(walk_cycle)]))
+    walk_f = list_frames(art, "walk")
+    if not walk_f:
+        # legacy run_1..4 + walk
+        walk_f = [pick(f"run_{i}", "walk", "idle") for i in range(1, 5)]
+        if "walk" in art:
+            walk_f.append("walk")
+    for i, p in enumerate(cycle(walk_f, ("walk", "idle"), 16)):
+        plan.append((20, i, p))
+        plan.append((21, i, walk_f[(i + 2) % len(walk_f)] if walk_f else p))
 
-    crouch = pick("crouch", "idle")
+    crouch_f = list_frames(art, "crouch") or [pick("crouch", "idle")]
     for i in range(3):
-        plan.append((11, i, crouch))
-    plan.append((5, 0, idle))
-    plan.append((6, 0, idle))
+        plan.append((11, i, crouch_f[min(i, len(crouch_f) - 1)]))
+    plan.append((5, 0, idle_f[0]))
+    plan.append((6, 0, idle_f[0]))
 
-    jump = pick("jump", "idle")
-    fall = pick("fall", "jump", "idle")
+    jump_f = list_frames(art, "jump") or [pick("jump", "idle")]
+    fall_f = list_frames(art, "fall") or [pick("fall", "jump", "idle")]
     for i in range(9):
-        plan.append((41, i, jump if i < 5 else fall))
+        plan.append((41, i, jump_f[i % len(jump_f)] if i < 5 else fall_f[i % len(fall_f)]))
     for i in (0, 1, 3, 4, 5):
-        plan.append((42, i, fall))
-    plan.append((43, 0, jump))
-    plan.append((43, 1, fall))
+        plan.append((42, i, fall_f[i % len(fall_f)]))
+    plan.append((43, 0, jump_f[0]))
+    plan.append((43, 1, fall_f[0]))
 
-    punch = pick("punch", "strike_up", "ready_f", "idle")
-    kick = pick("kick", "strike_down", "punch", "idle")
+    punch_f = list_frames(art, "punch") or [pick("punch", "strike_up", "ready_f", "idle")]
+    kick_f = list_frames(art, "kick") or [pick("kick", "strike_down", "punch", "idle")]
     ready = pick("ready_f", "idle")
-    for g, nmax, pose in [
-        (200, 3, punch),
-        (210, 6, punch),
-        (230, 3, kick),
-        (240, 6, kick),
-        (100, 6, ready),
-        (181, 7, punch),
-        (191, 4, punch),
-        (192, 2, punch),
-        (400, 2, kick),
-        (410, 5, kick),
-        (430, 4, kick),
-        (440, 7, kick),
-        (600, 2, kick),
-        (610, 4, kick),
-        (640, 3, kick),
-    ]:
+
+    def map_seq(group: int, nmax: int, seq: list[str]):
         for i in range(nmax):
-            plan.append((g, i, pose))
-    plan.append((630, 1, kick))
-    plan.append((630, 2, kick))
+            plan.append((group, i, seq[i % len(seq)]))
 
-    hurt = pick("hurt", "idle")
-    ko = pick("ko", "hurt", "idle")
-    for g, idxs in [
-        (5000, (0, 10, 11, 20, 21)),
-        (5010, (0, 10, 20, 21)),
-        (5011, (0,)),
-        (5020, (0, 10, 20)),
-        (5030, (0, 10, 30, 31, 40, 50)),
-        (5031, (0,)),
-        (5040, (0, 1, 10, 11, 20)),
-        (5060, (0, 1, 10)),
-        (5061, (0,)),
-        (5071, (0, 10, 20)),
-        (5300, (0, 1, 2, 3)),
+    map_seq(200, 3, punch_f)
+    map_seq(210, 6, punch_f)
+    map_seq(230, 3, kick_f)
+    map_seq(240, 6, kick_f)
+    map_seq(100, 6, [ready] if ready in art else punch_f)
+    map_seq(181, 7, punch_f)
+    map_seq(191, 4, punch_f)
+    map_seq(192, 2, punch_f)
+    map_seq(400, 2, kick_f)
+    map_seq(410, 5, kick_f)
+    map_seq(430, 4, kick_f)
+    map_seq(440, 7, kick_f)
+    map_seq(600, 2, kick_f)
+    map_seq(610, 4, kick_f)
+    map_seq(640, 3, kick_f)
+    plan.append((630, 1, kick_f[min(1, len(kick_f) - 1)]))
+    plan.append((630, 2, kick_f[min(2, len(kick_f) - 1)]))
+
+    hurt_f = list_frames(art, "hurt") or [pick("hurt", "idle")]
+    ko_f = list_frames(art, "ko") or [pick("ko", "hurt", "idle")]
+    for g, idxs, use_ko in [
+        (5000, (0, 10, 11, 20, 21), False),
+        (5010, (0, 10, 20, 21), False),
+        (5011, (0,), False),
+        (5020, (0, 10, 20), False),
+        (5030, (0, 10, 30, 31, 40, 50), False),
+        (5031, (0,), False),
+        (5040, (0, 1, 10, 11, 20), False),
+        (5060, (0, 1, 10), True),
+        (5061, (0,), True),
+        (5071, (0, 10, 20), True),
+        (5300, (0, 1, 2, 3), False),
     ]:
-        for i in idxs:
-            plan.append((g, i, hurt if g < 5030 or g == 5300 else ko if g >= 5060 else hurt))
+        seq = ko_f if use_ko else hurt_f
+        for i, idx in enumerate(idxs):
+            plan.append((g, idx, seq[i % len(seq)]))
 
+    block = pick("block", "idle")
     for i in range(3):
-        plan.append((120, i, pick("block", "idle")))
-    plan.append((121, 0, pick("block", "idle")))
-    plan.append((122, 0, pick("block", "idle")))
+        plan.append((120, i, block))
+    plan.append((121, 0, block))
+    plan.append((122, 0, block))
 
-    # specials
+    victory_f = list_frames(art, "victory") or ([pick("victory")] if "victory" in art else [])
+    # specials — keep legacy single-pose maps for non-Howard art still present
     for g, n, pose in [
         (800, 13, pick("charge", "idle")),
         (1000, 8, pick("ready_f", "punch", "idle")),
@@ -184,212 +199,208 @@ def build_group_plan(art: dict[str, Path]) -> list[tuple[int, int, str]]:
         (1340, 2, pick("air_fwd", "jump", "idle")),
         (1400, 8, pick("ultimate", "cast", "punch", "idle")),
     ]:
+        # If we have punch/kick frame sets, prefer them over stale single specials for attack-like groups
+        seq = None
+        if g in (1000, 1050, 1052, 1055) and len(punch_f) > 1:
+            seq = punch_f
+        elif g in (1100,) and len(kick_f) > 1:
+            seq = kick_f
+        elif g in (1300, 1320, 1340) and len(jump_f) > 1:
+            seq = jump_f
         for i in range(n):
-            plan.append((g, i, pose))
+            plan.append((g, i, seq[i % len(seq)] if seq else pose))
 
-    # portraits
+    if victory_f:
+        plan.append((181, 6, victory_f[0]))  # soft overlap ok; dedupe keeps first
+
     plan.append((9000, 0, pick("portrait", "portrait_paint", "idle")))
     plan.append((9000, 1, pick("portrait", "portrait_paint", "idle")))
-
-    # blank / -1 used in some intros — tiny transparent
-    plan.append((65535, 0, idle))  # placeholder unused; -1 handled separately
     return plan
 
 
-def load_art(char: str) -> dict[str, Path]:
-    d = ROOT / "content" / "chars" / char / "art"
-    out: dict[str, Path] = {}
-    if not d.is_dir():
-        return out
-    for p in d.glob("*.png"):
-        out[p.stem] = p
-    # Prefer Codex idle over idle_paint
-    return out
+def pose_target_h(pose: str) -> int:
+    """Target body height after normalize. Standing poses → KFM; crouch shorter.
+
+    Codex/OC frames are often drawn at inconsistent source pixel scales
+    (idle ~1400px, punch/walk ~1050px). Scaling everything by idle-only
+    scale makes attacks tiny. Per-pose target keeps on-screen size stable.
+    """
+    m = FRAME_RE.match(pose)
+    prefix = m.group(1) if m else pose.split("_")[0]
+    if prefix == "crouch" or pose.startswith("crouch"):
+        return max(1, int(round(KFM_STAND_H * 0.62)))
+    return KFM_STAND_H
 
 
-def prepare_rgba(path: Path, target_h: int, portrait: bool = False) -> tuple[Image.Image, int, int]:
+def normalize_to_kfm(
+    path: Path,
+    scale: float,
+    *,
+    portrait: bool = False,
+    portrait_h: int = 200,
+) -> tuple[Image.Image, int, int]:
+    """Scale by `scale`, pad to shared feet baseline."""
     im = Image.open(path).convert("RGBA")
-    # Trim near-transparent borders
-    bbox = im.split()[-1].point(lambda a: 255 if a > 8 else 0).getbbox()
+    bbox = alpha_bbox(im)
     if bbox:
         im = im.crop(bbox)
     w, h = im.size
     if portrait:
-        # select portrait: keep reasonably large; motif scales .25
-        # Make ~400px square-ish bust for 9000,0 and larger for 9000,1 handled by caller
-        scale = 400 / max(h, 1)
-    else:
-        scale = target_h / max(h, 1)
-    nw, nh = max(1, int(w * scale)), max(1, int(h * scale))
+        s = portrait_h / max(h, 1)
+        nw, nh = max(1, int(w * s)), max(1, int(h * s))
+        im = im.resize((nw, nh), Image.Resampling.LANCZOS)
+        return im, 0, 0
+
+    nw = max(1, int(round(w * scale)))
+    nh = max(1, int(round(h * scale)))
     im = im.resize((nw, nh), Image.Resampling.LANCZOS)
-    # Axis: feet center
-    ax = nw // 2
-    ay = nh - 2
-    return im, ax, ay
+
+    # Canvas: room for attack limbs; feet on shared baseline.
+    canvas_h = max(nh + CANVAS_PAD_TOP + CANVAS_PAD_BOTTOM, KFM_STAND_H + CANVAS_PAD_TOP + CANVAS_PAD_BOTTOM)
+    canvas_w = max(nw + 2 * CANVAS_PAD_X, int(KFM_STAND_H * 0.6) + 2 * CANVAS_PAD_X)
+    canvas = Image.new("RGBA", (canvas_w, canvas_h), (0, 0, 0, 0))
+    x = (canvas_w - nw) // 2
+    y = canvas_h - CANVAS_PAD_BOTTOM - nh  # feet on baseline
+    canvas.paste(im, (x, y), im)
+    ax = canvas_w // 2
+    ay = canvas_h - CANVAS_PAD_BOTTOM
+    return canvas, ax, ay
 
 
 def png_blob(im: Image.Image) -> bytes:
     buf = io.BytesIO()
     im.save(buf, format="PNG", optimize=True)
     png = buf.getvalue()
-    # 4-byte uncompressed size prefix (RGBA bytes) + PNG, as used by Ikemen format 12
     uncomp = im.size[0] * im.size[1] * 4
     return struct.pack("<I", uncomp) + png
 
 
 def pack_char(char: str, out_path: Path | None = None) -> Path:
     art = load_art(char)
-    if "idle" not in art and "idle_paint" not in art:
+    if "idle" not in art and "idle_00" not in art and "idle_paint" not in art:
         raise SystemExit(f"{char}: no idle art")
-    # normalize aliases
-    if "idle" not in art and "idle_paint" in art:
-        art["idle"] = art["idle_paint"]
-    if "portrait" not in art and "portrait_paint" in art:
-        art["portrait"] = art["portrait_paint"]
+    if "idle" not in art:
+        art["idle"] = art.get("idle_00") or art["idle_paint"]
+
+    # Uniform scale from idle body height → KFM standing height
+    idle_path = art.get("idle_00") or art["idle"]
+    idle_body_h = measure_body_h(idle_path)
+    scale = KFM_STAND_H / idle_body_h
+    print(f"{char}: idle body_h={idle_body_h}px → scale={scale:.4f} (KFM_STAND_H={KFM_STAND_H})")
 
     plan = build_group_plan(art)
-    # Deduplicate (group,index) keeping first
     seen: set[tuple[int, int]] = set()
     unique_plan: list[tuple[int, int, str]] = []
     for g, i, pose in plan:
-        if g == 65535:
+        if (g, i) in seen:
             continue
-        key = (g, i)
-        if key in seen:
-            continue
-        seen.add(key)
+        seen.add((g, i))
         unique_plan.append((g, i, pose))
 
-    # Prepare image cache keyed by pose (+ portrait size variant)
-    img_cache: dict[str, tuple[bytes, int, int, int, int]] = {}
+    img_cache: dict[str, tuple[bytes, int, int, int, int, int]] = {}
+    # cache value includes body_h after scale (nh) for verify
 
     def get_sprite(pose: str, group: int, index: int):
-        cache_key = pose
         if group == 9000 and index == 0:
-            cache_key = pose + "#small"
+            cache_key = pose + "#p0"
         elif group == 9000 and index == 1:
-            cache_key = pose + "#big"
+            cache_key = pose + "#p1"
+        else:
+            cache_key = pose
         if cache_key in img_cache:
             return img_cache[cache_key]
         path = art.get(pose) or art["idle"]
         if group == 9000:
-            im0 = Image.open(path).convert("RGBA")
-            bbox = im0.split()[-1].point(lambda a: 255 if a > 8 else 0).getbbox()
-            if bbox:
-                im0 = im0.crop(bbox)
-            if index == 0:
-                # small select icon ~200
-                th = 200
-            else:
-                th = 560
-            scale = th / max(im0.size[1], 1)
-            nw, nh = max(1, int(im0.size[0] * scale)), max(1, int(im0.size[1] * scale))
-            im = im0.resize((nw, nh), Image.Resampling.LANCZOS)
-            ax, ay = 0, 0  # portraits typically top-left axis
+            im, ax, ay = normalize_to_kfm(path, scale, portrait=True, portrait_h=200 if index == 0 else 560)
+            body_h = im.size[1]
         else:
-            im, ax, ay = prepare_rgba(path, TARGET_H)
-            # tiny idle breathing: nudge scale for idle_2/3 variety already from different files
+            # Per-frame scale → pose target (fixes Codex source size mismatch)
+            src_h = measure_body_h(path)
+            pose_scale = pose_target_h(pose) / max(src_h, 1)
+            im, ax, ay = normalize_to_kfm(path, pose_scale)
+            bb = alpha_bbox(im)
+            body_h = (bb[3] - bb[1]) if bb else im.size[1]
         blob = png_blob(im)
-        img_cache[cache_key] = (blob, im.size[0], im.size[1], ax, ay)
+        img_cache[cache_key] = (blob, im.size[0], im.size[1], ax, ay, body_h)
         return img_cache[cache_key]
 
-    # Build sprite list with linking for identical blobs
-    sprites = []  # dicts
+    sprites = []
     blob_to_first: dict[bytes, int] = {}
     ldata = bytearray()
+    body_heights: dict[str, int] = {}
 
     for g, i, pose in unique_plan:
-        blob, w, h, ax, ay = get_sprite(pose, g, i)
+        blob, w, h, ax, ay, body_h = get_sprite(pose, g, i)
+        body_heights[pose] = body_h
         if blob in blob_to_first:
             link = blob_to_first[blob]
             sprites.append(
-                dict(group=g, number=i, w=w, h=h, ax=ax, ay=ay, link=link, fmt=12, depth=32, dofs=0, dlen=0, pal=0, flags=0, blob=None)
+                dict(group=g, number=i, w=w, h=h, ax=ax, ay=ay, link=link, fmt=12, depth=32, dofs=0, dlen=0, pal=0, flags=0)
             )
         else:
             dofs = len(ldata)
             ldata += blob
-            idx = len(sprites)
-            blob_to_first[blob] = idx
+            blob_to_first[blob] = len(sprites)
             sprites.append(
-                dict(group=g, number=i, w=w, h=h, ax=ax, ay=ay, link=0, fmt=12, depth=32, dofs=dofs, dlen=len(blob), pal=0, flags=0, blob=blob)
+                dict(group=g, number=i, w=w, h=h, ax=ax, ay=ay, link=0, fmt=12, depth=32, dofs=dofs, dlen=len(blob), pal=0, flags=0)
             )
 
-    # One dummy RGBA palette (1024 bytes) for compatibility
+    # Verify scale consistency on core fight poses
+    core = [k for k in body_heights if k.startswith(("idle", "walk", "punch", "kick", "hurt", "jump", "fall", "crouch"))]
+    if core:
+        vals = [body_heights[k] for k in core]
+        print(f"{char}: scaled body_h range among fight frames: {min(vals)}–{max(vals)} (idle target {KFM_STAND_H})")
+        for k in sorted(core):
+            print(f"  {k}: body_h={body_heights[k]}")
+
     pal_data = bytearray()
     for i in range(256):
-        if i == 0:
-            pal_data += bytes((0, 0, 0, 0))
-        else:
-            pal_data += bytes((i, i, i, 255))
+        pal_data += bytes((0, 0, 0, 0) if i == 0 else (i, i, i, 255))
 
-    # Layout: header 512 | pal nodes | sprite nodes | ldata (pal pixels + sprite pngs)
     HEADER = 512
     num_pal = 1
     num_spr = len(sprites)
     pal_node_off = HEADER
     spr_node_off = pal_node_off + num_pal * 16
-    # put palette pixel data at start of ldata, then sprite blobs (already in ldata) need shift
-    # Rebuild: pal first, then sprites
     sprite_blobs = bytes(ldata)
     ldata2 = bytearray(pal_data)
-    # rewrite sprite dofs relative to new ldata (after palette)
     pal_len = len(pal_data)
     for s in sprites:
         if s["dlen"]:
             s["dofs"] = pal_len + s["dofs"]
     ldata2 += sprite_blobs
-
     lofs = spr_node_off + num_spr * 28
-    tofs = lofs + len(ldata2)  # unused
+    tofs = lofs + len(ldata2)
 
     out = bytearray()
-    # SFF v2 header (matches Ikemen image.go SffHeader.Read)
-    # sig[12] + verlo3,verlo2,verlo1,verhi + dummy + 4*dummy + sprite/pal/lofs/dummy/tofs
     out += b"ElecbyteSpr\x00"
-    out += bytes((0, 1, 0, 2))  # v2.01
-    out += struct.pack("<I", 0)  # reserved @16
-    out += struct.pack("<IIII", 0, 0, 0, 0)  # 4 dummies @20..32
-    assert len(out) == 36
+    out += bytes((0, 1, 0, 2))
+    out += struct.pack("<I", 0)
+    out += struct.pack("<IIII", 0, 0, 0, 0)
     out += struct.pack("<I", spr_node_off)
     out += struct.pack("<I", num_spr)
     out += struct.pack("<I", pal_node_off)
     out += struct.pack("<I", num_pal)
     out += struct.pack("<I", lofs)
-    out += struct.pack("<I", len(ldata2))  # Go reads as dummy
+    out += struct.pack("<I", len(ldata2))
     out += struct.pack("<I", tofs)
     if len(out) < HEADER:
         out += bytes(HEADER - len(out))
-    assert len(out) == HEADER
 
-    # Palette node (16 bytes): group, item, numcols, index, data_offset, data_length
-    # data_offset relative to lofs
     out += struct.pack("<HHHHII", 1, 1, 256, 0, 0, pal_len)
-
-    # Sprite nodes
     for s in sprites:
         out += struct.pack(
             "<HHHH hh HBB II HH",
-            s["group"],
-            s["number"],
-            s["w"],
-            s["h"],
-            s["ax"],
-            s["ay"],
-            s["link"],
-            s["fmt"],
-            s["depth"],
-            s["dofs"],
-            s["dlen"],
-            s["pal"],
-            s["flags"],
+            s["group"], s["number"], s["w"], s["h"], s["ax"], s["ay"],
+            s["link"], s["fmt"], s["depth"], s["dofs"], s["dlen"], s["pal"], s["flags"],
         )
-    assert len(out) == lofs
     out += ldata2
 
     if out_path is None:
         out_path = ROOT / "content" / "chars" / char / f"{char}.sff"
     out_path.write_bytes(out)
-    print(f"wrote {out_path} ({len(out)} bytes, {num_spr} sprites, {len(img_cache)} unique images)")
+    n_unique = sum(1 for s in sprites if s["dlen"])
+    print(f"wrote {out_path} ({len(out)} bytes, {num_spr} sprites, {n_unique} unique images, scale={scale:.4f})")
     return out_path
 
 
