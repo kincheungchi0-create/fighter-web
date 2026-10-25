@@ -2725,11 +2725,11 @@ function main.f_createMenu(tbl, bool_bgreset, bool_main, bool_f1, bool_del)
 					if not bool_main or esc() then
 						break
 					end
-				elseif bool_f1 and (getKey(motif.infobox.keycode) or gameOption('Config.FirstRun')) then
-					if gameOption('Config.FirstRun') then
-						modifyGameOption('Config.FirstRun', false)
-						options.f_saveCfg(false)
-					end
+				elseif bool_f1 and gameOption('Config.FirstRun') then
+					-- Browser port: skip FirstRun Infobox disclaimer (Welcome to I.K.E.M.E.N…)
+					modifyGameOption('Config.FirstRun', false)
+					options.f_saveCfg(false)
+				elseif bool_f1 and getKey(motif.infobox.keycode) then
 					main.f_warning(
 						motif.infobox.text.text,
 						motif[main.group],

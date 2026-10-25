@@ -24,7 +24,7 @@ Masters / pose prompts: `artgen/master_*.txt`, `artgen/pose_*`. Local mirrors: `
 - **Combat / walk / hurt / etc.:** complementary frames converted from spirit-clash `public/assets/paint/<char>/*.webp` into `content/chars/<char>/art/`.
 - **SFF pack:** `tools/pack_sff_v2.py` writes unique Elecbyte SFF v2 (PNG RGBA format 12) per character. Maps OC art into KFM720-compatible sprite groups so existing `.air/.cmd/.cns` still run. **In-match sprites are OCs, not Kung Fu Man.**
 - **Voices:** unchanged Fish copies from spirit-clash.
-- **Modes:** CPU VS CPU / VERSUS / EXIT only (`docs/MODES.md`).
+- **Modes:** CPU VS CPU / VERSUS / EXIT only (`docs/MODES.md`). Boot logo + char intro/ending storyboards disabled.
 
 ## Residual limitations
 

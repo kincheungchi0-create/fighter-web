@@ -155,9 +155,9 @@ flow, sprites/fonts/lifebars, sound effects and streamed music (mp3/ogg/wav),
 MIDI music through the bundled soundfont (`content/sound/soundfont.sf2`,
 TimGM6mb), keyboard and Gamepad-API input, persistent saves, background
 videos (`type = video` storyboard/stage backgrounds, decoded by the
-browser's own `<video>` pipeline — the stock screenpack's video logo
-storyboard plays at boot; only the default `scalemode = None` is
-implemented, and if the browser blocks unmuted autoplay the video plays
+browser's own `<video>` pipeline; boot logo storyboard is disabled so the
+title menu is the first screen; only the default `scalemode = None` is
+implemented, and if the browser blocks unmuted autoplay a video plays
 muted until the first click/keypress).
 
 Not working (yet):

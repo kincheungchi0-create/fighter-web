@@ -23,12 +23,9 @@ identical to what the release zips ship.
 
 ## What is included (and why)
 
-- `data/ikemen1/` — default motif (`system.def`, `system.sff`, boot logo
-  storyboard `logo.def`) + its bitmap fonts under `data/ikemen1/fonts/`
-  (referenced by `system.def` and `data/fight.def`).
-- `video/ik_logo.webm` — the Ikemen GO logo video played by
-  `data/ikemen1/logo.def` (`logo.storyboard` in `system.def`). Fetched from
-  the screenpack repo @ `cb92767` (`video/ik_logo.webm`), unmodified.
+- `data/ikemen1/` — default motif (`system.def`, `system.sff`; unused
+  orphan `logo.def` kept for reference) + its bitmap fonts under
+  `data/ikemen1/fonts/` (referenced by `system.def` and `data/fight.def`).
 - `data/` — motif/lifebar companions resolved from `data/`: `fight.def`,
   `fight.sff`, `fight.snd`, `fightfx.air`, `fightfx.sff`, `common.snd`,
   `glyphs.sff` (movelist glyphs, default motif param `glyphs = glyphs.sff`),
@@ -220,18 +217,18 @@ original hand-drawn characters self-published on GitHub by their author
 
 ## Local modifications (all marked with "Browser port" comments)
 
-- `data/ikemen1/system.def`: `logo.storyboard = logo.def` is enabled again
-  (background-video playback now works on js/wasm via a hidden `<video>`
-  element; `logo.def` and `video/ik_logo.webm` are bundled). The disabled
-  `[Attract Mode]` storyboard references remain commented out (attract mode
-  is off and `intro.def` is not bundled).
+- `data/ikemen1/system.def`: boot `logo.storyboard` disabled; `[Infobox Text]`
+  blanked; title decorative Ikemen `[TitleBG Title Logo*]` layers commented
+  out. `[Attract Mode]` stays off. Character intro/ending storyboards removed.
+- `Config.FirstRun = 0` (defaultConfig) + `external/script/main.lua` skips the
+  FirstRun Infobox disclaimer so boot goes straight to the title menu.
+- `video/ik_logo.webm` removed from the shipped bundle.
 - `data/select.def`: roster/stage trim described above.
 
 ## Intentionally omitted upstream files
 
-- `data/work/` — source art. From `video/`, only `ik_logo.webm` (used by the
-  logo storyboard) is bundled; any other upstream `video/` content is
-  referenced only by storyboards that are not enabled in the browser build.
+- `data/work/` — source art. `video/` (including `ik_logo.webm`) is not
+  shipped — boot logo storyboard is disabled.
 - Unreferenced legacy fonts (`num*`, `name14`, `font2`, `enter48`, `arcade`,
   `options`, `ending-bg`, `msgothic-tt36`, `mssansserif-tt36`, `f-6x8f.fnt`,
   `name1.fnt`) and the other stages (`stage0`, `stage1`, `stage3d*`,

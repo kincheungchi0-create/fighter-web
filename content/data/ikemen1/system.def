@@ -38,7 +38,7 @@ localcoord = 1280,720       ;Local coordinate space width and height (new in MUG
 [Files]
 spr = system.sff            ;Filename of sprite data
 snd = system.snd            ;Filename of sound data
-logo.storyboard = logo.def  ;Browser port: re-enabled — video playback works on js/wasm (plays video/ik_logo.webm via a hidden <video> element)
+;logo.storyboard =          ; Browser port: boot logo disabled — go straight to title
 ;intro.storyboard =         ;Intro storyboard definition (optional)
 select = select.def         ;Character and stage selection list
 fight = fight.def           ;Fight definition filename
@@ -293,41 +293,41 @@ start = 640,282
 trans = add1
 mask = 1
 
-[TitleBG Title LogoShadow]
-type = normal
-spriteno = 0, 2
-layerno = 1
-start = -250,155
-mask = 1
-alpha = 256,96
-trans = add
-sin.y = 15, 264, 2
+;[TitleBG Title LogoShadow]
+;type = normal
+;spriteno = 0, 2
+;layerno = 1
+;start = -250,155
+;mask = 1
+;alpha = 256,96
+;trans = add
+;sin.y = 15, 264, 2
 
-[TitleBG Title LogoShadow]
-type = normal
-spriteno = 0, 3
-layerno = 1
-start = -250,155
-mask = 1
-alpha = 256,96
-trans = add
-sin.y = 15, 264, 32
+;[TitleBG Title LogoShadow]
+;type = normal
+;spriteno = 0, 3
+;layerno = 1
+;start = -250,155
+;mask = 1
+;alpha = 256,96
+;trans = add
+;sin.y = 15, 264, 32
 
-[TitleBG Title Logo]
-type = normal
-spriteno = 0, 0
-layerno = 1
-start = -250,155
-mask = 1
-sin.y = 15, 264, 2
+;[TitleBG Title Logo]
+;type = normal
+;spriteno = 0, 0
+;layerno = 1
+;start = -250,155
+;mask = 1
+;sin.y = 15, 264, 2
 
-[TitleBG Title Logo 2]
-type = normal
-spriteno = 0, 1
-layerno = 1
-start = -250,155
-mask = 1
-sin.y = 15, 264, 32
+;[TitleBG Title Logo 2]
+;type = normal
+;spriteno = 0, 1
+;layerno = 1
+;start = -250,155
+;mask = 1
+;sin.y = 15, 264, 32
 
 ;----------------------------
 [Infobox] ;(new in MUGEN 1.0)
@@ -344,14 +344,7 @@ overlay.alpha = 0, 128
 
 ;----------------------------
 [Infobox Text]
-Welcome to I.K.E.M.E.N GO engine! (%s - %s)
-
-* This is a public development release, for testing purposes.
-* This build may contain bugs and incomplete features.
-* Your help and cooperation are appreciated!
-* Source code: https://github.com/ikemen-engine/Ikemen-GO
-* Bug reports: https://github.com/ikemen-engine/Ikemen-GO/issues
-* Docs: https://github.com/ikemen-engine/Ikemen-GO/wiki
+; Browser port: FirstRun disclaimer blanked (boot goes straight to title)
 
 ;-------------------------------------------------------------------
 ;Character select definition
@@ -2209,8 +2202,8 @@ fadeout.time = 10
 fadeout.col = 0, 0, 0
 credits.snd = 400, 0
 ;Browser port: attract mode stays disabled (enabled = 0 above); its storyboard
-;references are left commented out (intro.def is not bundled; logo.def is bundled
-;for the boot logo, but attract mode itself is not used in the browser build).
+;references stay commented out. Boot logo.storyboard is also disabled so the
+;browser build goes straight to the title menu.
 ;logo.storyboard = logo.def
 ;intro.storyboard = intro.def
 start.storyboard = 

@@ -41,5 +41,5 @@ c2 = 12
 
 ; Arcade mode
 [Arcade]
-intro.storyboard = intro.def
-ending.storyboard = ending.def
+;intro.storyboard =
+;ending.storyboard =
