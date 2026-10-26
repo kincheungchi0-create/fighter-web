@@ -5,7 +5,11 @@ Scale policy (Howard / OC fight sprites):
   - Match KFM720 standing sprite height (~420px feet-to-head in 1280x720 localcoord).
   - Each fight frame scales to a pose target (stand=KFM_STAND_H, crouch~62%)
     so inconsistent Codex source sizes do not make attacks jump big/small.
-  - Feet on a shared baseline; axis at feet center.
+  - Feet on the bottom edge of a tight alpha crop (KFM-like, minimal pad).
+  - Axis X = lower-body (legs/hips) alpha-mass center, NOT canvas midpoint.
+    Centering the whole attack bbox put ax in the middle of body+limb, which
+    shifts the torso backward and halves forward reach vs KFM (whose ax stays
+    near the torso while the fist/foot extends in +X).
 
 Usage:
   python3 tools/pack_sff_v2.py --char howard
@@ -26,10 +30,8 @@ CHARS = ["howard", "chiihoward", "hornam", "percy", "tyrus", "daddy"]
 
 # KFM720 idle group 0 heights are 420–424px (axis near feet). Match that.
 KFM_STAND_H = 420
-# Extra canvas pad so limbs in attack frames are not clipped after uniform scale.
-CANVAS_PAD_X = 80
-CANVAS_PAD_TOP = 40
-CANVAS_PAD_BOTTOM = 4
+# Tiny pad around tight alpha crop (KFM sprites are near-tight; avoid recentering).
+CANVAS_PAD = 2
 
 FRAME_RE = re.compile(r"^([a-z_]+?)_(\d+)$")
 
@@ -114,9 +116,10 @@ def build_group_plan(art: dict[str, Path]) -> list[tuple[int, int, str]]:
         walk_f = [pick(f"run_{i}", "walk", "idle") for i in range(1, 5)]
         if "walk" in art:
             walk_f.append("walk")
-    for i, p in enumerate(cycle(walk_f, ("walk", "idle"), 16)):
+    # Pack only unique walk indices (no 16-slot cycle of 6 frames — AIR will loop 0..n-1).
+    for i, p in enumerate(walk_f if walk_f else [pick("walk", "idle")]):
         plan.append((20, i, p))
-        plan.append((21, i, walk_f[(i + 2) % len(walk_f)] if walk_f else p))
+        plan.append((21, i, walk_f[(i + len(walk_f) // 2) % len(walk_f)] if walk_f else p))
 
     crouch_f = list_frames(art, "crouch") or [pick("crouch", "idle")]
     for i in range(3):
@@ -137,27 +140,56 @@ def build_group_plan(art: dict[str, Path]) -> list[tuple[int, int, str]]:
     kick_f = list_frames(art, "kick") or [pick("kick", "strike_down", "punch", "idle")]
     ready = pick("ready_f", "idle")
 
+    def unique_pose_keys(keys: list[str]) -> list[str]:
+        """Drop byte-identical consecutive/any duplicates; keep first occurrence order."""
+        seen: set[str] = set()
+        out: list[str] = []
+        # Prefer content hash via path mtime size later; here dedupe by measuring files.
+        blobs: dict[bytes, str] = {}
+        for k in keys:
+            p = art.get(k)
+            if not p:
+                continue
+            raw = p.read_bytes()
+            if raw in blobs:
+                continue
+            blobs[raw] = k
+            out.append(k)
+        return out or keys[:1]
+
+    punch_u = unique_pose_keys(punch_f)
+    kick_u = unique_pose_keys(kick_f)
+
     def map_seq(group: int, nmax: int, seq: list[str]):
         for i in range(nmax):
             plan.append((group, i, seq[i % len(seq)]))
 
-    map_seq(200, 3, punch_f)
-    map_seq(210, 6, punch_f)
-    map_seq(230, 3, kick_f)
-    map_seq(240, 6, kick_f)
-    map_seq(100, 6, [ready] if ready in art else punch_f)
-    map_seq(181, 7, punch_f)
-    map_seq(191, 4, punch_f)
-    map_seq(192, 2, punch_f)
-    map_seq(400, 2, kick_f)
-    map_seq(410, 5, kick_f)
-    map_seq(430, 4, kick_f)
-    map_seq(440, 7, kick_f)
-    map_seq(600, 2, kick_f)
-    map_seq(610, 4, kick_f)
-    map_seq(640, 3, kick_f)
-    plan.append((630, 1, kick_f[min(1, len(kick_f) - 1)]))
-    plan.append((630, 2, kick_f[min(2, len(kick_f) - 1)]))
+    # Stand normals: unique frames at low indices (AIR 200/210/230/240 use these).
+    # Extra higher indices are linked duplicates so leftover KFM AIR (intro/crouch/air)
+    # still resolves without inventing new poses.
+    for i, pose in enumerate(punch_u):
+        plan.append((200, i, pose))
+        plan.append((210, i, pose))
+    for i, pose in enumerate(kick_u):
+        plan.append((230, i, pose))
+        plan.append((240, i, pose))
+    map_seq(200, max(5, len(punch_u)), punch_u)
+    map_seq(210, max(5, len(punch_u)), punch_u)
+    map_seq(230, max(3, len(kick_u)), kick_u)
+    map_seq(240, max(5, len(kick_u)), kick_u)
+    map_seq(100, 6, [ready] if ready in art else punch_u)
+    map_seq(181, 7, punch_u)
+    map_seq(191, 4, punch_u)
+    map_seq(192, 2, punch_u)
+    map_seq(400, 2, kick_u)
+    map_seq(410, 5, kick_u)
+    map_seq(430, 4, kick_u)
+    map_seq(440, 7, kick_u)
+    map_seq(600, 2, kick_u)
+    map_seq(610, 4, kick_u)
+    map_seq(640, 3, kick_u)
+    plan.append((630, 1, kick_u[min(1, len(kick_u) - 1)]))
+    plan.append((630, 2, kick_u[min(len(kick_u) - 1, 1)]))
 
     hurt_f = list_frames(art, "hurt") or [pick("hurt", "idle")]
     ko_f = list_frames(art, "ko") or [pick("ko", "hurt", "idle")]
@@ -201,10 +233,10 @@ def build_group_plan(art: dict[str, Path]) -> list[tuple[int, int, str]]:
     ]:
         # If we have punch/kick frame sets, prefer them over stale single specials for attack-like groups
         seq = None
-        if g in (1000, 1050, 1052, 1055) and len(punch_f) > 1:
-            seq = punch_f
-        elif g in (1100,) and len(kick_f) > 1:
-            seq = kick_f
+        if g in (1000, 1050, 1052, 1055) and len(punch_u) > 1:
+            seq = punch_u
+        elif g in (1100,) and len(kick_u) > 1:
+            seq = kick_u
         elif g in (1300, 1320, 1340) and len(jump_f) > 1:
             seq = jump_f
         for i in range(n):
@@ -232,6 +264,33 @@ def pose_target_h(pose: str) -> int:
     return KFM_STAND_H
 
 
+def lower_body_cx(im: Image.Image, thr: int = 8, from_frac: float = 0.45) -> float:
+    """Horizontal center of opaque mass in the lower portion (legs/hips).
+
+    Used as the sprite axis so fists/feet that extend forward stay in +X
+    relative to a stable torso/feet anchor (KFM-like), instead of pulling
+    ax to the midpoint of the whole attack bbox.
+    """
+    a = im.split()[-1]
+    w, h = im.size
+    # Manual scan avoids a numpy dependency in the packer.
+    xs: list[int] = []
+    ys: list[int] = []
+    pix = a.load()
+    y0 = int(h * from_frac)
+    for y in range(y0, h):
+        for x in range(w):
+            if pix[x, y] > thr:
+                xs.append(x)
+                ys.append(y)
+    if not xs:
+        bb = alpha_bbox(im, thr)
+        if not bb:
+            return w / 2
+        return (bb[0] + bb[2] - 1) / 2
+    return sum(xs) / len(xs)
+
+
 def normalize_to_kfm(
     path: Path,
     scale: float,
@@ -239,7 +298,7 @@ def normalize_to_kfm(
     portrait: bool = False,
     portrait_h: int = 200,
 ) -> tuple[Image.Image, int, int]:
-    """Scale by `scale`, pad to shared feet baseline."""
+    """Scale by `scale`, tight-crop, axis at lower-body mass (not canvas center)."""
     im = Image.open(path).convert("RGBA")
     bbox = alpha_bbox(im)
     if bbox:
@@ -254,16 +313,19 @@ def normalize_to_kfm(
     nw = max(1, int(round(w * scale)))
     nh = max(1, int(round(h * scale)))
     im = im.resize((nw, nh), Image.Resampling.LANCZOS)
+    # Re-trim LANCZOS fringe so ax math matches visible pixels.
+    bbox = alpha_bbox(im)
+    if bbox:
+        im = im.crop(bbox)
+        nw, nh = im.size
 
-    # Canvas: room for attack limbs; feet on shared baseline.
-    canvas_h = max(nh + CANVAS_PAD_TOP + CANVAS_PAD_BOTTOM, KFM_STAND_H + CANVAS_PAD_TOP + CANVAS_PAD_BOTTOM)
-    canvas_w = max(nw + 2 * CANVAS_PAD_X, int(KFM_STAND_H * 0.6) + 2 * CANVAS_PAD_X)
-    canvas = Image.new("RGBA", (canvas_w, canvas_h), (0, 0, 0, 0))
-    x = (canvas_w - nw) // 2
-    y = canvas_h - CANVAS_PAD_BOTTOM - nh  # feet on baseline
-    canvas.paste(im, (x, y), im)
-    ax = canvas_w // 2
-    ay = canvas_h - CANVAS_PAD_BOTTOM
+    body_cx = lower_body_cx(im)
+    pad = CANVAS_PAD
+    canvas = Image.new("RGBA", (nw + 2 * pad, nh), (0, 0, 0, 0))
+    canvas.paste(im, (pad, 0), im)
+    # Axis at torso/feet center; feet on the bottom row (ay = nh).
+    ax = int(round(body_cx)) + pad
+    ay = nh
     return canvas, ax, ay
 
 
